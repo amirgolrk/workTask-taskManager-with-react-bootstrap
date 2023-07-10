@@ -1,6 +1,10 @@
-
 // eslint-disable-next-line react/prop-types, no-unused-vars
-const Tasks = ({ title, description, date, image }) => {
+import { useState } from "react";
+
+// eslint-disable-next-line react/prop-types
+const Tasks = ({id, title, description, date, image }) => {
+    const [toggle,setToggle] = useState(false)
+
   return (
     <>
       <div className="card rounded-5 shadow-sm mt-4">
@@ -8,18 +12,21 @@ const Tasks = ({ title, description, date, image }) => {
           <div className="row mt-2 ms-2">
             <div className="clearfix">
               <div className="float-start">
-                <s className="card-title tasktitle">{title}</s>
+                {!toggle ? <span className="card-title tasktitle">{title}</span> : <s className="card-title tasktitle">{title}</s>}
                 <p className="lead tasklead">{description}</p>
               </div>
               <div className="float-end pe-4 pt-3">
-                <div className="cntr">
+                <div className="form-check">
                   <input
-                    checked=""
                     type="checkbox"
-                    id="cbx"
-                    className="hidden-xs-up"
+                    className="form-check-input rounded-circle"
+                    style={{transform : 'scale(1.5)'}}
+                    id={`check${id}`}
+                    name="option1"
+                    value={Math.floor(Math.random() * 1000)}
+                    checked = {toggle}
+                    onChange={() => {setToggle(!toggle)}}
                   />
-                  <label htmlFor="cbx" className="cbx"></label>
                 </div>
               </div>
             </div>
@@ -33,7 +40,7 @@ const Tasks = ({ title, description, date, image }) => {
               <img
                 src={image}
                 className="float-end me-4 pb-2"
-                width='50%'
+                width="50%"
                 height="40px"
                 alt="people"
               />
