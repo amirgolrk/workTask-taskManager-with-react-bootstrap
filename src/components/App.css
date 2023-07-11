@@ -1,0 +1,66 @@
+a{
+  color: black;
+  text-decoration: none;
+}
+hr{
+  margin: 0px;
+}
+html,body{
+  background: linear-gradient(to top, #888888, #CCCCCC) center fixed;
+}
+.nav-link{
+  color: black;
+}
+.active {
+  border-bottom: 3px solid black;
+  font-weight : bold;
+}
+.navbar-items{
+  font-size: large;
+}
+.card{
+  border: none;
+}
+.card-header{
+  border: none;
+}
+.card-body{
+  background-color: #f9f9f9;
+  border: none;
+}
+.card-title{
+  font-weight:700;
+}
+.lead{
+  color: #6c757d;
+  font-weight: 500;
+}
+.addbtn{
+  background-color: #e2ebfa;
+  color: #1461e3;
+  width: 120px;
+  border-radius: 14px;
+}
+.addbtn:hover{
+  color: white;
+  background-color: #1461e3;
+}
+.list-group-item{
+  border: none;
+  color: grey;
+  background-color: #f9f9f9;
+}
+.list-group-item:first-child{
+  border-right: 2px solid silver;
+  color: #1461e3;
+}
+.tasktitle{
+  font-size: large;
+  font-weight: 600;
+}
+.tasklead{
+  font-size:medium;
+}
+.taskdate{
+  font-size:small;
+}
