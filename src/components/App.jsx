@@ -59,11 +59,11 @@ function App() {
           </div>
           <div className="card-body rounded-5">
             <div className="row">
-              <div className="col-sm-8">
+              <div className="col">
                 <h3 className="card-title">Todays Task</h3>
                 <p className="lead">wednesday , 11 may</p>
               </div>
-              <div className="col-sm-4">
+              <div className="col">
                 <button
                   className="btn addbtn mt-3 float-end me-1"
                   onClick={() => {
