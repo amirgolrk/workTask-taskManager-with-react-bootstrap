@@ -8,12 +8,12 @@ const Backdrop = (props) => {
 
 const ModalOverlay = (props) => {
   return (
-    <div className="modal">
+    <div className="rounded-5 modalStyle">
       <div className="container">
-        <h2>New Task</h2>
+        <h3 className="mt-1">New Task</h3>
         <form action="/action_page.php" onSubmit={props.onConfirm}>
           <div className="form-group">
-            <label htmlFor="email">Task Title:</label>
+            <label htmlFor="taskTitle">Task Title:</label>
             <input
               type="text"
               className="form-control"
@@ -23,13 +23,14 @@ const ModalOverlay = (props) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="pwd">description:</label>
-            <input
-              type="text"
+            <label htmlFor="description">description:</label>
+            <textarea
+              type="textarea"
               className="form-control"
               id="description"
               placeholder="Enter description"
               name="description"
+              rows={3}
             />
           </div>
           <div className="checkbox">
@@ -37,7 +38,7 @@ const ModalOverlay = (props) => {
               <input type="checkbox" name="remember" /> Remember me
             </label>
           </div>
-          <button type="submit" className="btn btn-default">
+          <button type="submit" className="btn btn-primary mt-1 float-end">
             Submit
           </button>
         </form>

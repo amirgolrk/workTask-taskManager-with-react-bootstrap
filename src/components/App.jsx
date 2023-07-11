@@ -65,7 +65,7 @@ function App() {
               </div>
               <div className="col-sm-4">
                 <button
-                  className="btn addbtn mt-3"
+                  className="btn addbtn mt-3 float-end me-1"
                   onClick={() => {
                     setFormIsOpen(true);
                   }}
