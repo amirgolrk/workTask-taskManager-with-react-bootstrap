@@ -5,9 +5,9 @@ import { useState } from "react";
 import people1 from "../assets/Screenshot 2023-07-05 142051.png";
 import people2 from "../assets/Screenshot 2023-07-05 154910.png";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import Tasks from "./Tasks";
-import FormModal from "./FormModal";
+import "./Card.css";
+import Tasks from "../components/Tasks";
+import FormModal from "../components/FormModal";
 
 function App() {
   const [formIsOpen, setFormIsOpen] = useState();
