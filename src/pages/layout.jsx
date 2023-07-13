@@ -14,6 +14,9 @@ const Layout = () => {
           <li>
             <Link to="/blogs">whats new?</Link>
           </li>
+          <li>
+            <Link to="/us">about us</Link>
+          </li>
         </ul>
       </nav>
 
