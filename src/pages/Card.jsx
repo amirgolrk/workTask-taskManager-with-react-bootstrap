@@ -10,7 +10,6 @@ import Tasks from "../components/Tasks";
 import FormModal from "../components/FormModal";
 
 function App() {
-  const [formIsOpen, setFormIsOpen] = useState();
   const DUMMY_DATA = [
     {
       id: 1,
@@ -27,14 +26,20 @@ function App() {
       image: people2,
     },
   ];
+  const [formIsOpen, setFormIsOpen] = useState();
+  const [tasksData,setTasksData] = useState(DUMMY_DATA)
 
   const confirmHandler = () => {
     setFormIsOpen(null);
   };
 
+  const addData = (task) =>{
+    setTasksData([task,...tasksData])
+    console.log(tasksData);
+}
   return (
     <>
-      {formIsOpen && <FormModal onConfirm={confirmHandler}/>}
+      {formIsOpen && <FormModal onConfirm={confirmHandler} onInput={addData}/>}
 
       <div className="container-fluid w-50">
         <div className="card mx-auto my-auto w-75 rounded-5">
@@ -104,17 +109,7 @@ function App() {
                 </li>
               </ul>
             </div>
-            {DUMMY_DATA.map((person) => {
-              return (
-                <Tasks
-                  key={person.id}
-                  title={person.title}
-                  description={person.description}
-                  date={person.date}
-                  image={person.image}
-                />
-              );
-            })}
+              <Tasks  items={tasksData}/>
           </div>
         </div>
       </div>
