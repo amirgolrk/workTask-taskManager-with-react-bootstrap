@@ -20,7 +20,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
       id: Math.round(Math.random() * 100),
       title: enteredTitle,
       description: enteredDescribe,
-      date: new Date(enteredDate),
+      date: new Date(enteredDate).toString(),
     };
     onInput(tasksData);
     console.log(tasksData);

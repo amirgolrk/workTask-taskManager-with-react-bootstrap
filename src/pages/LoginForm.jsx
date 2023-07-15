@@ -21,9 +21,9 @@ const LoginForm = () => {
                   placeholder="Password"
                 />
               </div>
-              <button>
-                <Link to="todo">Sign up</Link>
-              </button>
+              <Link to="todo">
+                <button>Sign up</button>
+              </Link>
             </form>
             <div className="form-section">
               <p>

@@ -80,7 +80,7 @@ function App() {
               </div>
             </div>
             <div className="d-flex justify-content-center mt-3">
-              <ul className="list-group list-group-horizontal test-center">
+              <ul className="list-group list-group-horizontal text-center">
                 <li className="list-group-item">
                   <a href="#">
                     All
