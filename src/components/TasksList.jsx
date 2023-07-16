@@ -2,16 +2,26 @@
 //import React from "react";
 import TaskItem from "./TaskItem";
 
-const TasksList = ({items}) => {
-    if (items.length === 0){
-        return <h2>no Tasks Found</h2>
-    }
-    console.log(items);
-    return (
-        items?.items?.map((elem)=> {
-            return <TaskItem key={elem.id} id={elem.id} title={elem.title} description={elem.description} date={elem.date} image={elem.image}/>
-        })
-    )
-}
+const TasksList = ({ items, onDeleteItem }) => {
+  if (items.length === 0) {
+    return <h2>No tasks found</h2>;
+  }
+  console.log(items);
+  return (
+    <>
+      {items.map((elem) => (
+        <TaskItem
+          onDeleteItem={onDeleteItem}
+          key={elem.id}
+          id={elem.id}
+          title={elem.title}
+          description={elem.description}
+          date={elem.date}
+          image={elem.image}
+        />
+      ))}
+    </>
+  );
+};
 
-export default TasksList
+export default TasksList;

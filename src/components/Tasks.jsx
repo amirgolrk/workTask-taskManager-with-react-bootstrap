@@ -3,10 +3,10 @@ import TasksList from "./TasksList";
 
 
 // eslint-disable-next-line react/prop-types
-const Tasks = (items) => {
+const Tasks = ({items,onDeleteItem}) => {
   return (
     <>
-      <TasksList items={items}/>
+      <TasksList onDeleteItem={onDeleteItem} items={items}/>
     </>
   );
 };

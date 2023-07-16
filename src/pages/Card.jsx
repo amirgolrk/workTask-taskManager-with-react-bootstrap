@@ -27,19 +27,27 @@ function App() {
     },
   ];
   const [formIsOpen, setFormIsOpen] = useState();
-  const [tasksData,setTasksData] = useState(DUMMY_DATA)
+  const [tasksData, setTasksData] = useState(DUMMY_DATA);
 
   const confirmHandler = () => {
     setFormIsOpen(null);
   };
 
-  const addData = (task) =>{
-    setTasksData([task,...tasksData])
+  const addData = (task) => {
+    setTasksData([task, ...tasksData]);
     console.log(tasksData);
-}
+  };
+
+  const deleteHandler = (taskId) => {
+    setTasksData((prevTasks) => {
+      const updatedTasks = prevTasks.filter((task) => task?.id !== taskId);
+      return updatedTasks;
+    });
+  };
+  console.log(tasksData);
   return (
     <>
-      {formIsOpen && <FormModal onConfirm={confirmHandler} onInput={addData}/>}
+      {formIsOpen && <FormModal onConfirm={confirmHandler} onInput={addData} />}
 
       <div className="container-fluid w-50">
         <div className="card mx-auto my-auto w-75 rounded-5">
@@ -109,7 +117,7 @@ function App() {
                 </li>
               </ul>
             </div>
-              <Tasks  items={tasksData}/>
+            <Tasks items={tasksData} onDeleteItem={deleteHandler} />
           </div>
         </div>
       </div>
