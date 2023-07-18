@@ -49,8 +49,8 @@ function App() {
     <>
       {formIsOpen && <FormModal onConfirm={confirmHandler} onInput={addData} />}
 
-      <div className="container-fluid w-50">
-        <div className="card mx-auto my-auto w-75 rounded-5">
+      <div className="container-fluid w-75">
+        <div className="card mx-auto my-auto w-50 rounded-5">
           <div className="card-header">
             <ul className="nav justify-content-center nav-fill">
               <li className="nav-item navbar-items">

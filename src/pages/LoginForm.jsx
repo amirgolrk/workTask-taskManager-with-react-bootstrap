@@ -1,39 +1,60 @@
 import "./LoginForm.css";
+import { Link,useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import axios from "axios";
 const LoginForm = () => {
+    const pageNavigate = useNavigate()
+    const [loginInfo,setLoginInfo] = useState({
+        email : "",
+        password : ""
+    })
+    const changeHandler = (e) => {
+        setLoginInfo({
+            ...loginInfo,
+            [e.target.name] : e.target.value
+    })
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+        axios.post("http://localhost:4000/login",{
+            email:loginInfo.email,
+            password:loginInfo.password
+        }).then(response => {
+            localStorage.setItem("token",response.data.accessToken)
+            localStorage.setItem("id",response.data.user.id)
+            localStorage.setItem("id",response.data.user.email)
+            ;pageNavigate("/todo")
+            console.log(response.data);
+        }).catch((e) => {alert(e.response.data)})
+    }
+
+
+    
+
+    
+
+
+
   return (
-    <div className="container">
-      <div className="row">
-        <div className="mx-auto col-10 col-md-8 col-lg-6">
-          <div className="form-box">
-            <form className="form">
-              <span className="title">Sign up</span>
-              <span className="subtitle">
-                Create a free account with your email.
-              </span>
-              <div className="form-container">
-                <input type="text" className="input" placeholder="Full Name" />
-                <input type="email" className="input" placeholder="Email" />
-                <input
-                  type="password"
-                  className="input"
-                  placeholder="Password"
-                />
-              </div>
-              <Link to="todo">
-                <button>Sign up</button>
-              </Link>
-            </form>
-            <div className="form-section">
-              <p>
-                Have an account? <a href="#">Log in</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <form className="form mx-auto" onSubmit={submitHandler}>
+  <p className="form-title">Sign in to your account</p>
+  <div className="input-container">
+    <input type="email" name="email" placeholder="Enter email" onChange={changeHandler}/>
+    <span></span>
+  </div>
+  <div className="input-container">
+    <input type="password" name="password" placeholder="Enter password"onChange={changeHandler}/>
+  </div>
+  <button type="submit" className="submit">
+    Sign in
+  </button>
+  <p className="signup-link">
+    No account?
+    <Link to={'/'}>Sign Up</Link>
+  </p>
+</form>
   );
 };
 
