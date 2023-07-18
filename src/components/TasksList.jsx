@@ -12,12 +12,13 @@ const TasksList = ({ items, onDeleteItem }) => {
       {items.map((elem) => (
         <TaskItem
           onDeleteItem={onDeleteItem}
-          key={elem.id}
-          id={elem.id}
+          key={elem.userId}
+          userId={elem.userId}
           title={elem.title}
           description={elem.description}
           date={elem.date}
           image={elem.image}
+          done={elem.done}
         />
       ))}
     </>

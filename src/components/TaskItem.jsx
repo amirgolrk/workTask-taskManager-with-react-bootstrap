@@ -2,11 +2,11 @@
 import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const TaskItem = ({onDeleteItem, title, description, id, date, image }) => {
-  const [toggle, setToggle] = useState(false);
+const TaskItem = ({onDeleteItem, title, description, userId, date, image,done}) => {
+  const [toggle, setToggle] = useState(done);
 
   const deleteHandler = () => {
-    onDeleteItem(id)
+    onDeleteItem(userId)
   }
   return (
     <>
@@ -36,8 +36,8 @@ const TaskItem = ({onDeleteItem, title, description, id, date, image }) => {
                     type="checkbox"
                     className="form-check-input rounded-circle"
                     style={{ transform: "scale(1.5)" }}
-                    id={`check${id}`}
-                    name={`option${id}`}
+                    id={`check${userId}`}
+                    name={`option${userId}`}
                     value={Math.floor(Math.random() * 1000)}
                     checked={toggle}
                     onChange={() => {
@@ -51,7 +51,7 @@ const TaskItem = ({onDeleteItem, title, description, id, date, image }) => {
           <hr />
           <div className="row">
             <div className="col-sm-9 ps-5">
-              <p className="lead taskdate">{date}</p>
+              <p className="lead taskdate">{new Date(date * 1000).toLocaleString()}</p>
             </div>
             <div className="col-sm-3">
               <img

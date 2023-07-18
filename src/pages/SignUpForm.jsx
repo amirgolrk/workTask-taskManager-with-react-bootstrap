@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 //import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const SignUpForm = () => {
   const [password1,setPassword1] = useState('');
   const [password2,setPassword2] = useState('');
@@ -87,7 +87,7 @@ const SignUpForm = () => {
             </form>
             <div className="form-section">
               <p>
-                Have an account? <a href="#">Log in</a>
+                Have an account? <Link to={"login"}>log in</Link>
               </p>
             </div>
           </div>

@@ -1,22 +1,24 @@
 //import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
-import { useState } from "react";
-import people1 from "../assets/Screenshot 2023-07-05 142051.png";
-import people2 from "../assets/Screenshot 2023-07-05 154910.png";
+import { useState , useEffect } from "react";
+//import people1 from "../assets/Screenshot 2023-07-05 142051.png";
+//import people2 from "../assets/Screenshot 2023-07-05 154910.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Card.css";
 import Tasks from "../components/Tasks";
 import FormModal from "../components/FormModal";
+import axios from "axios";
 
 function App() {
-  const DUMMY_DATA = [
+  /*const DUMMY_DATA = [
     {
       id: 1,
       title: "Client Review & Feedback",
       description: "crypto wallet Redesign",
       date: "today 10:00 pm - 11:45 pm",
       image: people1,
+      done : true
     },
     {
       id: 2,
@@ -24,10 +26,25 @@ function App() {
       description: "crypto wallet Redesign",
       date: "today 09:10 pm - 10:00 pm",
       image: people2,
+      done : false
     },
-  ];
+  ];*/
   const [formIsOpen, setFormIsOpen] = useState();
-  const [tasksData, setTasksData] = useState(DUMMY_DATA);
+  //const [tasksData, setTasksData] = useState(DUMMY_DATA);
+  const [tasksData, setTasksData] = useState([]);
+
+  useEffect(() => {
+    const fetchData =async () => {
+      try{
+        const token = localStorage.getItem("token");
+        const headers = { Authorization: `Bearer ${token}`}
+        const response = await axios.get('http://localhost:4000/todos',{headers})
+        setTasksData(response.data)
+        console.log(tasksData);
+      }catch(error){alert(error.response.data);}
+    }
+    fetchData()
+  },[])
 
   const confirmHandler = () => {
     setFormIsOpen(null);
