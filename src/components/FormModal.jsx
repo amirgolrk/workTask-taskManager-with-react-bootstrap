@@ -22,7 +22,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
     done: false,
     date: "",
   });
-  /*const submitHandler = async (e) => {
+  const submitHandler = async (e) => {
     //console.log(e);
     e.preventDefault();
     const ownerAndId =
@@ -54,37 +54,8 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
       setEnteredDescribe("");
       setEnteredDate("");
       setToggle(false)
-  };*/
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    const ownerAndId = Math.floor(Math.random() * 200) + 1;
-    const newTaskData = {
-      userId: ownerAndId,
-      owner: ownerAndId,
-      title: enteredTitle,
-      description: enteredDescribe,
-      done: toggle,
-      date: new Date(enteredDate).getTime().toString(),
-    };
-    const token = localStorage.getItem("token");
-    const headers = { Authorization: `Bearer ${token}` };
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/todos",
-        newTaskData,
-        { headers }
-      );
-      setTasksData(response.data);
-      onInput(response.data);
-      console.log(response.data);
-      setEnteredTitle("");
-      setEnteredDescribe("");
-      setEnteredDate("");
-      setToggle(false);
-    } catch (error) {
-      alert(error.response.data);
-    }
   };
+
 
   return (
     <div className="rounded-5 modalStyle">
@@ -125,7 +96,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
             <label htmlFor="date">Enter Date:</label>
             <input
               type="date"
-              className="form-control mb-3"
+              className="form-control mb-2"
               id="date"
               placeholder="Enter Date"
               name="date"
