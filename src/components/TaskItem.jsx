@@ -2,11 +2,11 @@
 import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const TaskItem = ({onDeleteItem, title, description, userId, date, image,done}) => {
+const TaskItem = ({onDeleteItem, title, description, id, date, image,done}) => {
   const [toggle, setToggle] = useState(done);
 
   const deleteHandler = () => {
-    onDeleteItem(userId)
+    onDeleteItem(id)
   }
   return (
     <>
@@ -36,8 +36,8 @@ const TaskItem = ({onDeleteItem, title, description, userId, date, image,done}) 
                     type="checkbox"
                     className="form-check-input rounded-circle"
                     style={{ transform: "scale(1.5)" }}
-                    id={`check${userId}`}
-                    name={`option${userId}`}
+                    id={`check${id}`}
+                    name={`option${id}`}
                     value={Math.floor(Math.random() * 1000)}
                     checked={toggle}
                     onChange={() => {

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-/*import ReactDOM from "react-dom";
+import ReactDOM from "react-dom";
 import { useState } from "react";
 import "./FormModal.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,6 +13,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredDescribe, setEnteredDescribe] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
+  const [toggle, setToggle] = useState(false);
   const [tasksData, setTasksData] = useState({
     userId: "",
     owner: "",
@@ -21,12 +22,11 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
     done: false,
     date: "",
   });
-  const [toggle, setToggle] = useState(false);
-  const submitHandler = async (e) => {
+  /*const submitHandler = async (e) => {
     //console.log(e);
     e.preventDefault();
     const ownerAndId =
-      Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER - 1)) + 1; //Math.round(Math.random() * 100)
+    Math.floor(Math.random() * 200) + 1; //Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER - 1)) + 1; //Math.round(Math.random() * 100)
     setTasksData({
       userId: ownerAndId,
       owner: ownerAndId,
@@ -37,18 +37,53 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
     });
     const token = localStorage.getItem("token");
     const headers = { Authorization: `Bearer ${token}` };
-    await axios
-      .post("http://localhost:4000/todos", { headers }, tasksData)
+    
+    try{
+      await axios
+      .post("http://localhost:4000/todos",tasksData ,{ headers } )
       .then((response) => {
         setTasksData(response.data);
       })
-      .catch((error) => alert(error.response.data));
-
-    onInput(tasksData);
-    console.log(tasksData);
-    setEnteredTitle("");
-    setEnteredDescribe("");
-    setEnteredDate("");
+    }catch{(error) => alert(error.response.data)}
+    
+    
+    
+      onInput(tasksData);
+      console.log(tasksData);
+      setEnteredTitle("");
+      setEnteredDescribe("");
+      setEnteredDate("");
+      setToggle(false)
+  };*/
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const ownerAndId = Math.floor(Math.random() * 200) + 1;
+    const newTaskData = {
+      userId: ownerAndId,
+      owner: ownerAndId,
+      title: enteredTitle,
+      description: enteredDescribe,
+      done: toggle,
+      date: new Date(enteredDate).getTime().toString(),
+    };
+    const token = localStorage.getItem("token");
+    const headers = { Authorization: `Bearer ${token}` };
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/todos",
+        newTaskData,
+        { headers }
+      );
+      setTasksData(response.data);
+      onInput(response.data);
+      console.log(response.data);
+      setEnteredTitle("");
+      setEnteredDescribe("");
+      setEnteredDate("");
+      setToggle(false);
+    } catch (error) {
+      alert(error.response.data);
+    }
   };
 
   return (
@@ -90,7 +125,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
             <label htmlFor="date">Enter Date:</label>
             <input
               type="date"
-              className="form-control"
+              className="form-control mb-3"
               id="date"
               placeholder="Enter Date"
               name="date"
@@ -101,7 +136,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
           <label htmlFor={"checkbox"}> done ?</label>
           <input
             type="checkbox"
-            className="form-check-input rounded-circle"
+            className="form-check-input rounded-circle ms-2"
             style={{ transform: "scale(1.5)" }}
             id="checkbox"
             name="checkbox"
@@ -135,11 +170,11 @@ const FormModal = ({ onConfirm, onInput }) => {
   );
 };
 
-export default FormModal;*/
+export default FormModal;
 
-/* eslint-disable react/prop-types */
-import ReactDOM from "react-dom";
-import { useState, useEffect } from "react";
+ //eslint-disable react/prop-types 
+/*import ReactDOM from "react-dom";
+import { useState,  } from "react";
 import "./FormModal.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
@@ -169,7 +204,9 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const ownerAndId =
-      Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER - 1)) + 1;
+    Math.floor(Math.random() * 200) + 1;
+
+  
     const newTasksData = {
       userId: ownerAndId,
       owner: ownerAndId,
@@ -178,22 +215,25 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
       done: toggle,
       date: new Date(enteredDate).getTime().toString(),
     };
-    setTasksData(newTasksData);
-
+  
     const token = localStorage.getItem("token");
     const headers = { Authorization: `Bearer ${token}` };
+    
     try {
-      await axios.post("http://localhost:4000/todos", newTasksData, { headers });
+      const response = await axios.post("http://localhost:4000/todos", newTasksData, { headers });
+      console.log(response.data);
       console.log("Task submitted successfully!");
+      onInput(newTasksData);
+      setEnteredTitle("");
+      setEnteredDescribe("");
+      setEnteredDate("");
+      setToggle(false);
     } catch (error) {
       console.error("Error submitting task:", error.response.data);
     }
-
-    onInput(newTasksData);
-    setEnteredTitle("");
-    setEnteredDescribe("");
-    setEnteredDate("");
+    console.log(newTasksData);
   };
+  
 
   return (
     <div className="rounded-5 modalStyle">
@@ -274,4 +314,4 @@ const FormModal = ({ onConfirm, onInput }) => {
   );
 };
 
-export default FormModal;
+export default FormModal;*/
