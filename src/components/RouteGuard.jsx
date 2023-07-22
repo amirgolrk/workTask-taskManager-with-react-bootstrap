@@ -1,28 +1,27 @@
 /* eslint-disable react/prop-types */
 //import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
- 
-const RouteGuard = ({ component: Component, ...rest }) => {
- 
-   function hasJWT() {
-       let flag = false;
- 
-       //check user has JWT token
-       localStorage.getItem("token") ? flag=true : flag=false
-      
-       return flag
-   }
- 
-   return (
-       <Route {...rest}
-           render={props => (
-               hasJWT() ?
-                   <Component {...props} />
-                   :
-                   <Redirect to={{ pathname: '/login' }} />
-           )}
-       />
-   );
+import {Route } from "react-router-dom";
+//importing Navigate instead of Redirect because of react-dom unsupported
+//import { Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
+
+const RouteGuard = ({ children }) => {
+  function hasJWT() {
+    return !!localStorage.getItem("token");
+  }
+  const navigate = useNavigate();
+  return (
+    <Route
+      render={() =>
+        hasJWT() ? (
+          children
+        ) : (
+            navigate('/login')
+        )
+      }
+    />
+  );
 };
- 
+
 export default RouteGuard;

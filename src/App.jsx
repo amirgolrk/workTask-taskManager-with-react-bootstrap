@@ -1,14 +1,14 @@
 
 //import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter,Routes, Route } from "react-router-dom";
 import Card from "./pages/Card"
 import SignUpForm from "./pages/signUpForm";
 import LoginForm from "./pages/LoginForm";
 import Layout from "./pages/layout";
 import ErrorPage from "./pages/ErrorPage";
-//import RouteGuard from "./components/RouteGuard";
+import RouteGuard from "./components/RouteGuard";
 
-const App = () => {
+/*const App = () => {
     return (
         <BrowserRouter>
             <Routes>
@@ -22,4 +22,25 @@ const App = () => {
         </BrowserRouter>
     )
 }
-export default App
+export default App*/
+
+const App = () => {
+    return (
+      <BrowserRouter>
+        {/* Use the Routes component as the top-level container */}
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<SignUpForm />} />
+            <Route path="login" element={<LoginForm />} />
+            {/* Wrap the protected route with the RouteGuard component */}
+            <Route element={<RouteGuard />}>
+              <Route path="todo" element={<Card />} />
+            </Route>
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    );
+  };
+  
+  export default App;
