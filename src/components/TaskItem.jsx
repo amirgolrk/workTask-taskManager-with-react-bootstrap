@@ -1,10 +1,21 @@
 //import React from "react";
+import axios from "axios";
 import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
 const TaskItem = ({onDeleteItem, title, description, id, date, image,done}) => {
   const [toggle, setToggle] = useState(done);
-
+  const token = localStorage.getItem("token");
+  const headers = { Authorization: `Bearer ${token}`}
+  const toggleHandler = async () => {
+    try {
+      await axios.patch(`http://localhost:4000/todos/${id}`, { done : !toggle }, { headers });
+      setToggle((prevToggle) => !prevToggle);
+      alert("Task done status edited successfully");
+    } catch (error) {
+      alert(error.response.data);
+    }
+  };
   const deleteHandler = () => {
     onDeleteItem(id)
   }
@@ -40,9 +51,11 @@ const TaskItem = ({onDeleteItem, title, description, id, date, image,done}) => {
                     name={`option${id}`}
                     //value={Math.floor(Math.random() * 1000)}
                     checked={toggle}
-                    onChange={() => {
-                      setToggle(!toggle);
-                    }}
+                    onChange={
+                      toggleHandler
+                      /*() => {
+                      setToggle(!toggle);*/
+                    }
                   />
                 </div>
               </div>

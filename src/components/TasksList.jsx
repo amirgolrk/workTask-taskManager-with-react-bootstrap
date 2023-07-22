@@ -4,7 +4,7 @@ import TaskItem from "./TaskItem";
 
 const TasksList = ({ items, onDeleteItem }) => {
   if (items.length === 0) {
-    return <h2 style={{textAlign:"center"}}>No tasks found</h2>;
+    return <h2 className="mt-3" style={{textAlign:"center"}}>No tasks found</h2>;
   }
   console.log(items);
   //fixed key from elem.userId to ${elem.userId}-${index} to make it unique
