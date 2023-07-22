@@ -32,12 +32,12 @@ function App() {
   const [formIsOpen, setFormIsOpen] = useState();
   //const [tasksData, setTasksData] = useState(DUMMY_DATA);
   const [tasksData, setTasksData] = useState([]);
+  const token = localStorage.getItem("token");
+  const headers = { Authorization: `Bearer ${token}`}
 
   useEffect(() => {
     const fetchData =async () => {
       try{
-        const token = localStorage.getItem("token");
-        const headers = { Authorization: `Bearer ${token}`}
         const response = await axios.get('http://localhost:4000/todos',{headers})
         setTasksData(response.data)
         console.log(tasksData);
@@ -55,12 +55,17 @@ function App() {
     console.log(tasksData);
   };
 
-  const deleteHandler = (taskId) => {
-    setTasksData((prevTasks) => {
-      const updatedTasks = prevTasks.filter((task) => task?.id !== taskId);
-      
-      return updatedTasks;  
-    });
+  const deleteHandler = async (taskId) => {
+    try{
+      await axios.delete(`http://localhost:4000/todos/${taskId}`, {headers})
+      await setTasksData((prevTasks) => {
+        const updatedTasks = prevTasks.filter((task) => task?.id !== taskId);
+        return updatedTasks;  
+      });
+      alert("task deleted successfully")
+    }catch{
+      (error) => {alert(error.response.data)}
+    }
   };
   console.log(tasksData);
   return (
