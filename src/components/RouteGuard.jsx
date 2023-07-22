@@ -1,26 +1,23 @@
 /* eslint-disable react/prop-types */
-//import React from 'react';
-import {Route } from "react-router-dom";
 //importing Navigate instead of Redirect because of react-dom unsupported
-//import { Navigate } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-
+import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const RouteGuard = ({ children }) => {
-  function hasJWT() {
+  const hasJWT = () => {
     return !!localStorage.getItem("token");
   }
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    hasJWT();
+  }, []);
+
   return (
-    <Route
-      render={() =>
-        hasJWT() ? (
-          children
-        ) : (
-            navigate('/login')
-        )
+    <>
+      {
+        hasJWT() ? children : <Navigate to={"/login"}/>
       }
-    />
+    </>
   );
 };
 
