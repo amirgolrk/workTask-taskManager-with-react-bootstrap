@@ -38,7 +38,7 @@ const TaskItem = ({onDeleteItem, title, description, id, date, image,done}) => {
                     style={{ transform: "scale(1.5)" }}
                     id={`check${id}`}
                     name={`option${id}`}
-                    value={Math.floor(Math.random() * 1000)}
+                    //value={Math.floor(Math.random() * 1000)}
                     checked={toggle}
                     onChange={() => {
                       setToggle(!toggle);

@@ -24,7 +24,7 @@ const LoginForm = () => {
         }).then(response => {
             localStorage.setItem("token",response.data.accessToken)
             localStorage.setItem("id",response.data.user.id)
-            localStorage.setItem("id",response.data.user.email)
+            localStorage.setItem("email",response.data.user.email)
             ;pageNavigate("/todo")
             console.log(response.data);
         }).catch((e) => {alert(e.response.data)})

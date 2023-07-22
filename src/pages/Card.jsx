@@ -7,7 +7,7 @@ import { useState , useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Card.css";
 import Tasks from "../components/Tasks";
-import FormModal from "../components/FormModal";
+import FormModal from "../modals/FormModal";
 import axios from "axios";
 
 function App() {
@@ -58,7 +58,8 @@ function App() {
   const deleteHandler = (taskId) => {
     setTasksData((prevTasks) => {
       const updatedTasks = prevTasks.filter((task) => task?.id !== taskId);
-      return updatedTasks;
+      
+      return updatedTasks;  
     });
   };
   console.log(tasksData);
