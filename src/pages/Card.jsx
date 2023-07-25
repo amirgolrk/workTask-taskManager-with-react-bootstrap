@@ -1,7 +1,7 @@
 //import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 //import people1 from "../assets/Screenshot 2023-07-05 142051.png";
 //import people2 from "../assets/Screenshot 2023-07-05 154910.png";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,6 +9,7 @@ import "./Card.css";
 import Tasks from "../components/Tasks";
 import FormModal from "../modals/FormModal";
 import axios from "axios";
+import Loader from "../helpers/Loader";
 
 function App() {
   /*const DUMMY_DATA = [
@@ -32,19 +33,27 @@ function App() {
   const [formIsOpen, setFormIsOpen] = useState();
   //const [tasksData, setTasksData] = useState(DUMMY_DATA);
   const [tasksData, setTasksData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const token = localStorage.getItem("token");
-  const headers = { Authorization: `Bearer ${token}`}
+  const headers = { Authorization: `Bearer ${token}` };
 
   useEffect(() => {
-    const fetchData =async () => {
-      try{
-        const response = await axios.get('http://localhost:4000/todos',{headers})
-        setTasksData(response.data)
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get("http://localhost:4000/todos", {
+          headers,
+        });
+        setTasksData(response.data);
         console.log(tasksData);
-      }catch(error){alert(error.response.data);}
-    }
-    fetchData()
-  },[])
+      } catch (error) {
+        alert(error.response.data);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const confirmHandler = () => {
     setFormIsOpen(null);
@@ -56,16 +65,20 @@ function App() {
   };
 
   const deleteHandler = async (taskId) => {
-    try{
-      await axios.delete(`http://localhost:4000/todos/${taskId}`, {headers})
+    setIsLoading(true);
+    try {
+      await axios.delete(`http://localhost:4000/todos/${taskId}`, { headers });
       await setTasksData((prevTasks) => {
         const updatedTasks = prevTasks.filter((task) => task?.id !== taskId);
-        return updatedTasks;  
+        return updatedTasks;
       });
-      alert("task deleted successfully")
-    }catch{
-      (error) => {alert(error.response.data)}
+      alert("task deleted successfully");
+    } catch {
+      (error) => {
+        alert(error.response.data);
+      };
     }
+    setIsLoading(false);
   };
   console.log(tasksData);
   return (
@@ -140,7 +153,11 @@ function App() {
                 </li>
               </ul>
             </div>
-            <Tasks items={tasksData} onDeleteItem={deleteHandler} />
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <Tasks items={tasksData} onDeleteItem={deleteHandler} />
+            )}
           </div>
         </div>
       </div>

@@ -23,20 +23,3 @@ const App = () => {
     )
 }
 export default App
-
-/*const App = () => {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<SignUpForm />} />
-            <Route path="login" element={<LoginForm />} />
-            <Route path="todo" element={<RouteGuard><Card/></RouteGuard>}/>
-            <Route path="*" element={<ErrorPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    );
-  };
-  
-  export default App;*/
