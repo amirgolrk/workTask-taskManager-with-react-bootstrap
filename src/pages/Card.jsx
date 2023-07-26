@@ -10,8 +10,12 @@ import Tasks from "../components/Tasks";
 import FormModal from "../modals/FormModal";
 import axios from "axios";
 import Loader from "../helpers/Loader";
+import { useDispatch , useSelector } from "react-redux";
+import { getTasks } from "../Features/todoSlice";
 
-function App() {
+function Card() {
+  const dispatch = useDispatch()
+  const reduxTasks = useSelector((state) => state.todoslice.tasks)
   /*const DUMMY_DATA = [
     {
       id: 1,
@@ -32,14 +36,15 @@ function App() {
   ];*/
   const [formIsOpen, setFormIsOpen] = useState();
   //const [tasksData, setTasksData] = useState(DUMMY_DATA);
-  const [tasksData, setTasksData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  //const [tasksData, setTasksData] = useState([]);
+  //const [isLoading, setIsLoading] = useState(false);
   const token = localStorage.getItem("token");
   const headers = { Authorization: `Bearer ${token}` };
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
+      dispatch(getTasks())
+      /*setIsLoading(true);
       try {
         const response = await axios.get("http://localhost:4000/todos", {
           headers,
@@ -50,10 +55,10 @@ function App() {
         alert(error?.response?.data);
       } finally {
         setIsLoading(false);
-      }
+      }*/
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   const confirmHandler = () => {
     setFormIsOpen(null);
@@ -156,7 +161,7 @@ function App() {
             {isLoading ? (
               <Loader />
             ) : (
-              <Tasks items={tasksData} onDeleteItem={deleteHandler} />
+              <Tasks items={reduxTasks/*tasksData*/} onDeleteItem={deleteHandler} />
             )}
           </div>
         </div>
@@ -165,4 +170,4 @@ function App() {
   );
 }
 
-export default App;
+export default Card;

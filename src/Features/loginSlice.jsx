@@ -5,7 +5,7 @@ const loginSlice = createSlice({
     name : "login",
     initialState : {
         email : "",
-        password : ""
+        password : "",
     },
     reducers : {
         handlingChange :(state , action) =>  {
