@@ -1,24 +1,35 @@
 import "./LoginForm.css";
 import { Link,useNavigate } from "react-router-dom";
-import { useState } from "react";
+//import { Link } from "react-router-dom";
+//import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
+//import axios from "axios";
+import { useDispatch } from "react-redux";
+import {auth,handlingChange} from "../Features/loginSlice"
+//import {useHistory} from "react-router-dom"
+
 const LoginForm = () => {
-    const pageNavigate = useNavigate()
+  const dispatch = useDispatch()
+  const navigateTo = useNavigate()
+    /*const pageNavigate = useNavigate()
     const [loginInfo,setLoginInfo] = useState({
         email : "",
         password : ""
-    })
+    })*/
     const changeHandler = (e) => {
-        setLoginInfo({
+      const name = e.target.name
+      const value = e.target.value
+      dispatch(handlingChange({name , value}))
+        /*setLoginInfo({
             ...loginInfo,
             [e.target.name] : e.target.value
-    })
+    })*/
     }
 
     const submitHandler = (e) => {
         e.preventDefault()
-        axios.post("http://localhost:4000/login",{
+        dispatch(auth())
+        /*axios.post("http://localhost:4000/login",{
             email:loginInfo.email,
             password:loginInfo.password
         }).then(response => {
@@ -27,7 +38,10 @@ const LoginForm = () => {
             localStorage.setItem("email",response.data.user.email)
             ;pageNavigate("/todo")
             console.log(response.data);
-        }).catch((e) => {alert(e.response.data)})
+        }).catch((e) => {alert(e.response.data)})*/
+        if (localStorage.getItem("token")){
+          navigateTo("/todo")
+        }
     }
 
 

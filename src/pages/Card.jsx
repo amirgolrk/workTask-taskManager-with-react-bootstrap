@@ -45,9 +45,9 @@ function App() {
           headers,
         });
         setTasksData(response.data);
-        console.log(tasksData);
+        //console.log(tasksData);
       } catch (error) {
-        alert(error.response.data);
+        alert(error?.response?.data);
       } finally {
         setIsLoading(false);
       }
@@ -75,12 +75,12 @@ function App() {
       alert("task deleted successfully");
     } catch {
       (error) => {
-        alert(error.response.data);
+        alert(error?.response?.data);
       };
     }
     setIsLoading(false);
   };
-  console.log(tasksData);
+  //console.log(tasksData);
   return (
     <>
       {formIsOpen && <FormModal onConfirm={confirmHandler} onInput={addData} />}
