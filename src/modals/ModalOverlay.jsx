@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import axios from "axios";
+/*import axios from "axios";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -17,40 +17,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
       done: false,
       date: "",
     });
-    /*const submitHandler = async (e) => {
-      //console.log(e);
-      e.preventDefault();
-      const ownerAndId =localStorage.getItem("id")
-      //Math.floor(Math.random() * 200) + 1; Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER - 1)) + 1; Math.round(Math.random() * 100)
-      setTasksData({
-        userId: ownerAndId,
-        owner: ownerAndId,
-        title: enteredTitle,
-        description: enteredDescribe,
-        done: toggle,
-        date: new Date(enteredDate).getTime().toString(),
-      });
-      const token = localStorage.getItem("token");
-      const headers = { Authorization: `Bearer ${token}` };
-      
-      try{
-        await axios
-        .post("http://localhost:4000/todos",tasksData ,{ headers } )
-        .then((response) => {
-          setTasksData(response.data);
-          console.log(response.data);
-        })
-      }catch{(error) => alert(error.response.data)}
-      
-      
-      
-        onInput(tasksData);
-        console.log(tasksData);
-        setEnteredTitle("");
-        setEnteredDescribe("");
-        setEnteredDate("");
-        setToggle(false)
-    };*/
+
     
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -82,9 +49,51 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
         setEnteredDescribe("");
         setEnteredDate("");
         setToggle(false);
-      };
+      };*/
       
-  
+      import axios from "axios";
+      import { useState } from "react";
+      import "bootstrap/dist/css/bootstrap.min.css";
+      import { useDispatch } from "react-redux";
+      import { AddTask } from "../Features/todoSlice";
+      
+      const ModalOverlay = ({ onInput, onConfirm }) => {
+        const [enteredTitle, setEnteredTitle] = useState("");
+        const [enteredDescribe, setEnteredDescribe] = useState("");
+        const [enteredDate, setEnteredDate] = useState("");
+        const [toggle, setToggle] = useState(false);
+        const dispatch = useDispatch(); // Get the dispatch function
+      
+        const submitHandler = async (e) => {
+          e.preventDefault();
+          const ownerAndId = localStorage.getItem("id");
+          const newTaskData = {
+            userId: ownerAndId,
+            owner: ownerAndId,
+            title: enteredTitle,
+            description: enteredDescribe,
+            done: toggle,
+            date: new Date(enteredDate).getTime().toString(),
+          };
+      
+          /*const token = localStorage.getItem("token");
+          const headers = { Authorization: `Bearer ${token}` };*/
+      
+          try {
+            // Dispatch the AddTask action with the new task data
+            await dispatch(AddTask(newTaskData));
+            console.log(newTaskData);
+            setEnteredTitle("");
+            setEnteredDescribe("");
+            setEnteredDate("");
+            setToggle(false);
+            onConfirm(); // Call onConfirm to close the modal
+          } catch (error) {
+            alert(error.response.data);
+          }
+        };
+
+
     return (
       <div className="rounded-5 modalStyle">
         <div className="container">

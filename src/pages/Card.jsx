@@ -1,6 +1,3 @@
-//import { useState } from 'react'
-//import reactLogo from './assets/react.svg'
-//import viteLogo from '/vite.svg'
 import { useState, useEffect } from "react";
 //import people1 from "../assets/Screenshot 2023-07-05 142051.png";
 //import people2 from "../assets/Screenshot 2023-07-05 154910.png";
@@ -8,43 +5,26 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Card.css";
 import Tasks from "../components/Tasks";
 import FormModal from "../modals/FormModal";
-import axios from "axios";
+//import axios from "axios";
 import Loader from "../helpers/Loader";
 import { useDispatch , useSelector } from "react-redux";
 import { getTasks } from "../Features/todoSlice";
+import { deleteTask } from "../Features/todoSlice";
 
-function Card() {
-  const dispatch = useDispatch()
-  const reduxTasks = useSelector((state) => state.todoslice.tasks)
-  /*const DUMMY_DATA = [
-    {
-      id: 1,
-      title: "Client Review & Feedback",
-      description: "crypto wallet Redesign",
-      date: "today 10:00 pm - 11:45 pm",
-      image: people1,
-      done : true
-    },
-    {
-      id: 2,
-      title: "Create Wireframe",
-      description: "crypto wallet Redesign",
-      date: "today 09:10 pm - 10:00 pm",
-      image: people2,
-      done : false
-    },
-  ];*/
+
+/*function Card() {
+  //const dispatch = useDispatch()
+  //const reduxTasks = useSelector((state) => state.todoslice.tasks)
   const [formIsOpen, setFormIsOpen] = useState();
-  //const [tasksData, setTasksData] = useState(DUMMY_DATA);
-  //const [tasksData, setTasksData] = useState([]);
-  //const [isLoading, setIsLoading] = useState(false);
+  const [tasksData, setTasksData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const token = localStorage.getItem("token");
   const headers = { Authorization: `Bearer ${token}` };
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(getTasks())
-      /*setIsLoading(true);
+      //dispatch(getTasks())
+      setIsLoading(true);
       try {
         const response = await axios.get("http://localhost:4000/todos", {
           headers,
@@ -55,10 +35,10 @@ function Card() {
         alert(error?.response?.data);
       } finally {
         setIsLoading(false);
-      }*/
+      }
     };
     fetchData();
-  }, [dispatch]);
+  }, []);
 
   const confirmHandler = () => {
     setFormIsOpen(null);
@@ -85,7 +65,32 @@ function Card() {
     }
     setIsLoading(false);
   };
-  //console.log(tasksData);
+  //console.log(tasksData);*/
+
+  function Card() {
+    const [formIsOpen, setFormIsOpen] = useState();
+    const dispatch = useDispatch();
+    const tasksData = useSelector((state) => state.todoSlice.tasks);
+    const isLoading = useSelector((state) => state.todoSlice.loading);
+    
+    useEffect(() => {
+      // Dispatch getTasks action to load tasks from the API
+      dispatch(getTasks());
+    }, [dispatch]);
+
+    const confirmHandler = () => {
+      setFormIsOpen(null);
+    };
+  
+    const addData = (task) => {
+      // We don't need this function since we're handling tasks through Redux.
+      // If you have a form for adding tasks, you can dispatch the `AddTask` action instead.
+    };
+  
+    const deleteHandler = (taskId) => {
+      dispatch(deleteTask(taskId));
+    };
+
   return (
     <>
       {formIsOpen && <FormModal onConfirm={confirmHandler} onInput={addData} />}
@@ -161,7 +166,7 @@ function Card() {
             {isLoading ? (
               <Loader />
             ) : (
-              <Tasks items={reduxTasks/*tasksData*/} onDeleteItem={deleteHandler} />
+              <Tasks items={tasksData} onDeleteItem={deleteHandler} />
             )}
           </div>
         </div>
