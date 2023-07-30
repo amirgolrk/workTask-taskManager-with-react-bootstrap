@@ -71,8 +71,8 @@ import { deleteTask } from "../Features/todoSlice";
     const [formIsOpen, setFormIsOpen] = useState(false);
     const dispatch = useDispatch();
     const tasksData = useSelector((state) => state.todo.tasks);
+    console.log(tasksData);
     const isLoading = useSelector((state) => state.todo.loading);
-    
     useEffect(() => {
       // Dispatch getTasks action to load tasks from the API
       dispatch(getTasks());
@@ -85,10 +85,12 @@ import { deleteTask } from "../Features/todoSlice";
     const addData = (task) => {
       // We don't need this function since we're handling tasks through Redux.
       // If you have a form for adding tasks, you can dispatch the `AddTask` action instead.
+      dispatch(getTasks());
     };
   
     const deleteHandler = (taskId) => {
       dispatch(deleteTask(taskId));
+      dispatch(getTasks());
     };
 
   return (

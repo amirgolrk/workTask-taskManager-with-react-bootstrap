@@ -69,7 +69,6 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
       
         const submitHandler = async (e) => {
           e.preventDefault();
-          dispatch(getTasks())
           const ownerAndId = localStorage.getItem("id");
           const newTaskData = {
             userId: ownerAndId,
@@ -86,6 +85,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
           try {
             // Dispatch the AddTask action with the new task data
             await dispatch(AddTask(newTaskData));
+            await dispatch(getTasks())
             console.log(newTaskData);
             setEnteredTitle("");
             setEnteredDescribe("");
@@ -93,6 +93,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
             setToggle(false);
             onConfirm(); // Call onConfirm to close the modal
           } catch (error) {
+            console.log(error?.response?.data);
             alert(error.response.data);
           }
         };

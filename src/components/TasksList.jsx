@@ -1,17 +1,21 @@
 /* eslint-disable react/prop-types */
 //import React from "react";
+import { useEffect,useState } from "react";
 import TaskItem from "./TaskItem";
 
 const TasksList = ({ items, onDeleteItem }) => {
-  if (items.length === 0) {
-    return <h2 className="mt-3" style={{textAlign:"center"}}>No tasks found</h2>;
-  }
+  useEffect(()=>{
+    setLoading(false)
+  },[items])
+  const [loading ,setLoading]=useState(false)
+ 
   console.log(items);
   //fixed key from elem.userId to ${elem.userId}-${index} to make it unique
-  return (
-    <>
-      {items.map((elem,index) => (
+    return (
+    <>{items?.[0] ? <>
+      {!loading && items?.map((elem,index) => (
         <TaskItem
+        setLoading={setLoading}
           onDeleteItem={onDeleteItem}
           key={`${elem.userId}-${index}`}
           userId={elem.userId}
@@ -23,7 +27,8 @@ const TasksList = ({ items, onDeleteItem }) => {
           image={elem.image}
           done={elem.done}
         />
-      ))}
+      ))} </>:<h2 className="mt-3" style={{textAlign:"center"}}>No tasks found</h2>}
+   
     </>
   );
 };

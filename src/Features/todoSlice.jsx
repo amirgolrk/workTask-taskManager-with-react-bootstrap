@@ -1,39 +1,77 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const token = localStorage.getItem("token");
-const headers = { Authorization: `Bearer ${token}` };
-
+/*const token = localStorage.getItem("token");
+const headers = { Authorization: `Bearer ${token}` };*/
 
 export const getTasks = createAsyncThunk("todo/getTodos", async () => {
+  const token = localStorage.getItem("token");
+  const headers = { Authorization: `Bearer ${token}` };
   const response = await axios.get("http://localhost:4000/todos", { headers });
   return response.data;
 });
 
-export const deleteTask = createAsyncThunk("todo/deleteTodo", async (taskId) => {
-  const response = await axios.delete(`http://localhost:4000/todos/${taskId}`, { headers })
-  return response.data
-})
+export const deleteTask = createAsyncThunk(
+  "todo/deleteTodo",
+  async (taskId) => {
+    const token = localStorage.getItem("token");
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await axios.delete(
+      `http://localhost:4000/todos/${taskId}`,
+      { headers }
+    );
+    return response.data;
+  }
+);
+
+export const doneTask = createAsyncThunk(
+  "task/doneTask",
+  async (task) => {
+    try {
+      const token = localStorage.getItem("token");
+      const headers = { Authorization: `Bearer ${token}` };
+      const response = await axios.patch(
+        `http://localhost:4000/todos/${task.id}`,
+        { done: !task.done },
+        {
+          headers,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      alert(error?.response)
+      console.log(error?.response);
+    }
+  }
+);
 
 export const AddTask = createAsyncThunk("task/addTask", async (task) => {
-  const userId = Number(window.localStorage.getItem("id"));
-  const owner = userId;
-  const newTask = { userId, owner, ...task };
-  const response = await axios.post(
-    "http://localhost:4000/todos",
-    {
-      userId: newTask.userId,
-      owner: newTask.owner,
-      title: newTask.title,
-      description: newTask.description,
-      date: (newTask.date),
-      done: newTask.done,
-    },
-    {
-      headers
+  try{
+      const token = localStorage.getItem("token");
+      const headers = { Authorization: `Bearer ${token}` };
+      const userId = Number(localStorage.getItem("id"));
+      const owner = userId;
+      const newTask = { userId, owner, ...task };
+      await axios.post(
+     "http://localhost:4000/todos",
+     {
+       userId: newTask.userId,
+       owner: newTask.owner,
+       title: newTask.title,
+       description: newTask.description,
+       date: newTask.date,
+       done: newTask.done,
+     },
+     {
+       headers,
+     }
+   );
+
+    }catch(error){
+      console.log(error?.response);
+      alert(error?.response)
     }
-  );
-  return response.data;
+  //return response.data;
 });
 
 export const todoSlice = createSlice({
@@ -55,33 +93,52 @@ export const todoSlice = createSlice({
         state.loading = false;
       })
       .addCase(getTasks?.rejected, (state, action) => {
-        state.loading = false
+        state.loading = false;
         alert(action?.error.name);
+        console.log(action?.error.name);
       })
-      .addCase(deleteTask?.fulfilled, (state,action) =>{
+      .addCase(deleteTask?.fulfilled, (state, action) => {
         state.loading = false;
         state.tasks = action.payload;
-        alert("task deleted succeessfully")
-
+        alert("task deleted succeessfully");
       })
-      .addCase(deleteTask?.pending, (state,action) =>{
+      .addCase(deleteTask?.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(deleteTask?.rejected, (state,action) =>{
+      .addCase(deleteTask?.rejected, (state, action) => {
         alert(action);
+        console.log(action);
       })
       .addCase(AddTask?.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(AddTask?.fulfilled, (state, action) => {
-        //action.payload = {...action.payload,date : action.payload.date*1000}
         state.tasks = action.payload;
-        //state.tasks = [...state.tasks,state.tasks.date*1000]
         state.loading = false;
       })
       .addCase(AddTask?.rejected, (state, action) => {
+        console.log(action);
         alert(action);
       })
+      .addCase(doneTask.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(doneTask.fulfilled, (state, action) => {
+        /*if(state.tasks.id === action.payload){
+          state.tasks.done = !state.tasks.done
+        }*/
+        const taskId = action.payload.id;
+        const taskToUpdate = state.tasks.find((task) => task.id === taskId);
+        if (taskToUpdate) {
+          taskToUpdate.done = !taskToUpdate.done;
+        }
+        state.loading = false;
+        state.loading = false;
+      })
+      .addCase(doneTask.rejected, (state, action) => {
+        state.loading = false;
+        console.log(action);
+      });
   },
 });
 

@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //import axios from "axios";
 import { useDispatch } from "react-redux";
 import {auth,handlingChange} from "../Features/loginSlice"
+import { getTasks } from "../Features/todoSlice";
 const LoginForm = () => {
   const dispatch = useDispatch()
   const navigateTo = useNavigate()
@@ -25,6 +26,7 @@ const LoginForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
+         //dispatch(getTasks())
          dispatch(auth({onSuccess :() => {navigateTo("/todo")},onFail: () => {alert('you are not logged in')}}))
         /*axios.post("http://localhost:4000/login",{
             email:loginInfo.email,

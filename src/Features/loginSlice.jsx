@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useNavigate } from "react-router";
 
 const loginSlice = createSlice({
     name : "login",
@@ -24,6 +23,7 @@ const loginSlice = createSlice({
                 action.payload.onSuccess()
             }).catch((error) => {alert(error?.response?.message)
                 action.payload.onFail()
+                console.log(error?.response?.message)
             })
         },
     }

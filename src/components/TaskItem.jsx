@@ -1,24 +1,42 @@
+/* eslint-disable react/prop-types */
 //import React from "react";
-import axios from "axios";
 import { useState } from "react";
 import TimeDisplay from "../helpers/TimeDisplay";
+import { useDispatch } from "react-redux";
+import { doneTask, getTasks,deleteTask } from "../Features/todoSlice";
+import { useSelector } from "react-redux";
 
-// eslint-disable-next-line react/prop-types
-const TaskItem = ({onDeleteItem, title, description, id, date, image,done}) => {
-  const [toggle, setToggle] = useState(done);
-  const token = localStorage.getItem("token");
-  const headers = { Authorization: `Bearer ${token}`}
+const TaskItem = (props) => {
+  const [toggle, setToggle] = useState(props.done);
+  const dispatch = useDispatch()
+  const tasksId = useSelector((state) => state.todo.tasks.id);
+  //const token = localStorage.getItem("token");
+  //const headers = { Authorization: `Bearer ${token}`}
   const toggleHandler = async () => {
-    try {
-      await axios.patch(`http://localhost:4000/todos/${id}`, { done : !toggle }, { headers });
+    try{
+      dispatch(doneTask(props))
+      setToggle((prevToggle) => !prevToggle);
+      alert("Task done status edited successfully");
+      dispatch(getTasks())
+    }catch (error){
+      console.log(error);
+      alert(error)
+    }
+
+    /*try {
+      await axios.patch(`http://localhost:4000/todos/${props.id}`, { done : !toggle }, { headers });
       setToggle((prevToggle) => !prevToggle);
       alert("Task done status edited successfully");
     } catch (error) {
       alert(error.response.data);
-    }
+    }*/
   };
   const deleteHandler = () => {
-    onDeleteItem(id)
+    props?.setLoading(true)
+    props.onDeleteItem(props.id)
+
+    //dispatch(deleteTask(tasksId));
+    //dispatch(getTasks())
   }
   return (
     <>
@@ -36,11 +54,11 @@ const TaskItem = ({onDeleteItem, title, description, id, date, image,done}) => {
             <div className="clearfix">
               <div className="float-start">
                 {!toggle ? (
-                  <span className="card-title tasktitle">{title}</span>
+                  <span className="card-title tasktitle">{props.title}</span>
                 ) : (
-                  <s className="card-title tasktitle">{title}</s>
+                  <s className="card-title tasktitle">{props.title}</s>
                 )}
-                <p className="lead tasklead">{description}</p>
+                <p className="lead tasklead">{props.description}</p>
               </div>
               <div className="float-end pe-4 pt-3">
                 <div className="form-check">
@@ -48,8 +66,8 @@ const TaskItem = ({onDeleteItem, title, description, id, date, image,done}) => {
                     type="checkbox"
                     className="form-check-input rounded-circle"
                     style={{ transform: "scale(1.5)" }}
-                    id={`check${id}`}
-                    name={`option${id}`}
+                    id={`check${props.id}`}
+                    name={`option${props.id}`}
                     //value={Math.floor(Math.random() * 1000)}
                     checked={toggle}
                     onChange={
@@ -66,11 +84,11 @@ const TaskItem = ({onDeleteItem, title, description, id, date, image,done}) => {
           <div className="row">
             <div className="col-sm-9 ps-5">
               {/*<p className="lead taskdate">{new Date(date * 1000).toLocaleString()}</p>*/}
-              <TimeDisplay unixTime={date}/>
+              <TimeDisplay unixTime={props.date}/>
             </div>
             <div className="col-sm-3">
               <img
-                src={image}
+                src={props.image}
                 className="float-end me-4 pb-2"
                 width="50%"
                 height="40px"
