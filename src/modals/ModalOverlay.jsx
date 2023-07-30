@@ -56,6 +56,9 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
       import "bootstrap/dist/css/bootstrap.min.css";
       import { useDispatch } from "react-redux";
       import { AddTask } from "../Features/todoSlice";
+      import { getTasks } from "../Features/todoSlice";
+
+
       
       const ModalOverlay = ({ onInput, onConfirm }) => {
         const [enteredTitle, setEnteredTitle] = useState("");
@@ -66,14 +69,15 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
       
         const submitHandler = async (e) => {
           e.preventDefault();
+          dispatch(getTasks())
           const ownerAndId = localStorage.getItem("id");
           const newTaskData = {
             userId: ownerAndId,
             owner: ownerAndId,
             title: enteredTitle,
             description: enteredDescribe,
-            done: toggle,
-            date: new Date(enteredDate).getTime().toString(),
+            done: !toggle,
+            date: new Date(enteredDate).getTime()
           };
       
           /*const token = localStorage.getItem("token");

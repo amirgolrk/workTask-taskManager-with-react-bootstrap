@@ -1,6 +1,7 @@
 //import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import TimeDisplay from "../helpers/TimeDisplay";
 
 // eslint-disable-next-line react/prop-types
 const TaskItem = ({onDeleteItem, title, description, id, date, image,done}) => {
@@ -64,7 +65,8 @@ const TaskItem = ({onDeleteItem, title, description, id, date, image,done}) => {
           <hr />
           <div className="row">
             <div className="col-sm-9 ps-5">
-              <p className="lead taskdate">{new Date(date * 1000).toLocaleString()}</p>
+              {/*<p className="lead taskdate">{new Date(date * 1000).toLocaleString()}</p>*/}
+              <TimeDisplay unixTime={date}/>
             </div>
             <div className="col-sm-3">
               <img

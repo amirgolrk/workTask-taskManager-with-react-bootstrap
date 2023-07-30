@@ -1,13 +1,10 @@
 import "./LoginForm.css";
 import { Link,useNavigate } from "react-router-dom";
-//import { Link } from "react-router-dom";
 //import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 //import axios from "axios";
 import { useDispatch } from "react-redux";
 import {auth,handlingChange} from "../Features/loginSlice"
-//import {useHistory} from "react-router-dom"
-
 const LoginForm = () => {
   const dispatch = useDispatch()
   const navigateTo = useNavigate()
@@ -28,7 +25,7 @@ const LoginForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(auth())
+         dispatch(auth({onSuccess :() => {navigateTo("/todo")},onFail: () => {alert('you are not logged in')}}))
         /*axios.post("http://localhost:4000/login",{
             email:loginInfo.email,
             password:loginInfo.password
@@ -39,9 +36,6 @@ const LoginForm = () => {
             ;pageNavigate("/todo")
             console.log(response.data);
         }).catch((e) => {alert(e.response.data)})*/
-        if (localStorage.getItem("token")){
-          navigateTo("/todo")
-        }
     }
 
 

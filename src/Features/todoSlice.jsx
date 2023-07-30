@@ -26,7 +26,7 @@ export const AddTask = createAsyncThunk("task/addTask", async (task) => {
       owner: newTask.owner,
       title: newTask.title,
       description: newTask.description,
-      date: newTask.date,
+      date: (newTask.date),
       done: newTask.done,
     },
     {
@@ -46,36 +46,40 @@ export const todoSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(getTasks.pending, (state, action) => {
+      .addCase(getTasks?.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(getTasks.fulfilled, (state, action) => {
+      .addCase(getTasks?.fulfilled, (state, action) => {
         state.tasks = action.payload;
         console.log(action);
         state.loading = false;
       })
-      .addCase(getTasks.rejected, (state, action) => {
-        alert(action);
+      .addCase(getTasks?.rejected, (state, action) => {
+        state.loading = false
+        alert(action?.error.name);
       })
-      .addCase(deleteTask.fulfilled, (state,action) =>{
+      .addCase(deleteTask?.fulfilled, (state,action) =>{
         state.loading = false;
+        state.tasks = action.payload;
         alert("task deleted succeessfully")
 
       })
-      .addCase(deleteTask.pending, (state,action) =>{
+      .addCase(deleteTask?.pending, (state,action) =>{
         state.loading = true;
       })
-      .addCase(deleteTask.rejected, (state,action) =>{
+      .addCase(deleteTask?.rejected, (state,action) =>{
         alert(action);
       })
-      .addCase(AddTask.pending, (state, action) => {
+      .addCase(AddTask?.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(AddTask.fulfilled, (state, action) => {
+      .addCase(AddTask?.fulfilled, (state, action) => {
+        //action.payload = {...action.payload,date : action.payload.date*1000}
         state.tasks = action.payload;
+        //state.tasks = [...state.tasks,state.tasks.date*1000]
         state.loading = false;
       })
-      .addCase(AddTask.rejected, (state, action) => {
+      .addCase(AddTask?.rejected, (state, action) => {
         alert(action);
       })
   },

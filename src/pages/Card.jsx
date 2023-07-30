@@ -68,10 +68,10 @@ import { deleteTask } from "../Features/todoSlice";
   //console.log(tasksData);*/
 
   function Card() {
-    const [formIsOpen, setFormIsOpen] = useState();
+    const [formIsOpen, setFormIsOpen] = useState(false);
     const dispatch = useDispatch();
-    const tasksData = useSelector((state) => state.todoSlice.tasks);
-    const isLoading = useSelector((state) => state.todoSlice.loading);
+    const tasksData = useSelector((state) => state.todo.tasks);
+    const isLoading = useSelector((state) => state.todo.loading);
     
     useEffect(() => {
       // Dispatch getTasks action to load tasks from the API
