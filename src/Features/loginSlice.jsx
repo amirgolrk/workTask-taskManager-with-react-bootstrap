@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { toast } from 'react-toastify';
 const loginSlice = createSlice({
     name : "login",
     initialState : {
@@ -21,9 +21,17 @@ const loginSlice = createSlice({
                 localStorage.setItem("id",response.data.user.id)
                 localStorage.setItem("email",response.data.user.email)
                 action.payload.onSuccess()
-            }).catch((error) => {alert(error?.response?.message)
+            }).catch((error) => {toast.error(error?.response?.data, {
+                position: "top-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });//alert(error?.response?.data)
                 action.payload.onFail()
-                console.log(error?.response?.message)
             })
         },
     }

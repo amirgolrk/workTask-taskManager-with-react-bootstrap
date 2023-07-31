@@ -8,6 +8,9 @@ hr{
 html,body{
   background: linear-gradient(to top, #888888, #CCCCCC) center fixed;
 }
+.custom-width-45 {
+  width: 45%;
+}
 .nav-link{
   color: black;
 }
@@ -20,6 +23,7 @@ html,body{
 }
 .card{
   border: none;
+  background-color: #f9f9f9;
 }
 .card-header{
   border: none;
@@ -45,14 +49,14 @@ html,body{
   color: white;
   background-color: #1461e3;
 }
-.list-group-item{
+.dash-nav{
   border: none;
   color: grey;
   background-color: #f9f9f9;
 }
-.list-group-item:first-child{
+.dash-nav:first-child{
   border-right: 2px solid silver;
-  color: #1461e3;
+  color: white;
 }
 .tasktitle{
   font-size: large;
@@ -63,4 +67,14 @@ html,body{
 }
 .taskdate{
   font-size:small;
+}
+@media (max-width: 450px) {
+  .custom-width-45 {
+    width: 100%; 
+  }
+}
+@media (min-width: 450px) and (max-width: 650px) {
+  .custom-width-45 {
+    width: 80%; 
+  }
 }

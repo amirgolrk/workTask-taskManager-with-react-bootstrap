@@ -1,14 +1,30 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { toast } from 'react-toastify';
 /*const token = localStorage.getItem("token");
 const headers = { Authorization: `Bearer ${token}` };*/
 
 export const getTasks = createAsyncThunk("todo/getTodos", async () => {
-  const token = localStorage.getItem("token");
-  const headers = { Authorization: `Bearer ${token}` };
-  const response = await axios.get("http://localhost:4000/todos", { headers });
-  return response.data;
+  try{
+    const token = localStorage.getItem("token");
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await axios.get("http://localhost:4000/todos", { headers });
+    return response.data;
+  }catch(error){
+    //alert(`${error?.response?.data} please log in again`)
+    toast.error(`${error?.response?.data} please log in again`, {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+    localStorage.clear()
+  }
+
 });
 
 export const deleteTask = createAsyncThunk(
@@ -39,8 +55,18 @@ export const doneTask = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      alert(error?.response)
-      console.log(error?.response);
+      //alert(error?.response?.data)
+      toast.error(error?.response?.data, {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+      console.log(error?.response?.data);
     }
   }
 );
@@ -69,7 +95,17 @@ export const AddTask = createAsyncThunk("task/addTask", async (task) => {
 
     }catch(error){
       console.log(error?.response);
-      alert(error?.response)
+      //alert(error?.response)
+      toast.error(error?.response?.data, {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
     }
   //return response.data;
 });
@@ -99,8 +135,18 @@ export const todoSlice = createSlice({
       })
       .addCase(deleteTask?.fulfilled, (state, action) => {
         state.loading = false;
-        state.tasks = action.payload;
-        alert("task deleted succeessfully");
+        //state.tasks = action.payload;
+        //alert("task deleted succeessfully");
+        toast.success("task deleted succeessfully", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
       })
       .addCase(deleteTask?.pending, (state, action) => {
         state.loading = true;

@@ -7,11 +7,10 @@ import Tasks from "../components/Tasks";
 import FormModal from "../modals/FormModal";
 //import axios from "axios";
 import Loader from "../helpers/Loader";
-import { useDispatch , useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTasks } from "../Features/todoSlice";
 import { deleteTask } from "../Features/todoSlice";
-
-
+import CurrentTimeComponent from "../helpers/CurrentTimeComponent";
 /*function Card() {
   //const dispatch = useDispatch()
   //const reduxTasks = useSelector((state) => state.todoslice.tasks)
@@ -67,38 +66,43 @@ import { deleteTask } from "../Features/todoSlice";
   };
   //console.log(tasksData);*/
 
-  function Card() {
-    const [formIsOpen, setFormIsOpen] = useState(false);
-    const dispatch = useDispatch();
-    const tasksData = useSelector((state) => state.todo.tasks);
-    console.log(tasksData);
-    const isLoading = useSelector((state) => state.todo.loading);
-    useEffect(() => {
-      // Dispatch getTasks action to load tasks from the API
-      dispatch(getTasks());
-    }, [dispatch]);
+function Card() {
+  const [formIsOpen, setFormIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const tasksData = useSelector((state) => state.todo.tasks);
+  console.log(tasksData);
+  const isLoading = useSelector((state) => state.todo.loading);
 
-    const confirmHandler = () => {
-      setFormIsOpen(null);
-    };
-  
-    const addData = (task) => {
-      // We don't need this function since we're handling tasks through Redux.
-      // If you have a form for adding tasks, you can dispatch the `AddTask` action instead.
-      dispatch(getTasks());
-    };
-  
-    const deleteHandler = (taskId) => {
-      dispatch(deleteTask(taskId));
-      dispatch(getTasks());
-    };
+  const confirmHandler = () => {
+    setFormIsOpen(null);
+  };
+
+  const addData =async (task) => {
+    // We don't need this function since we're handling tasks through Redux.
+    // If you have a form for adding tasks, you can dispatch the `AddTask` action instead.
+    await dispatch(getTasks());
+  };
+
+  /*const deleteHandler = (taskId) => {
+    dispatch(deleteTask(taskId));
+    dispatch(getTasks());
+  };*/
+  async function deleteHandler  (taskId) {
+    await dispatch(deleteTask(taskId))
+    await dispatch(getTasks())
+  }
+
+  useEffect(() => {
+    // Dispatch getTasks action to load tasks from the API
+    dispatch(getTasks());
+  }, [dispatch]);
 
   return (
     <>
       {formIsOpen && <FormModal onConfirm={confirmHandler} onInput={addData} />}
 
-      <div className="container-fluid w-75">
-        <div className="card mx-auto my-auto w-50 rounded-5">
+      <div className="container-fluid custom-width-45">
+        <div className="card mx-auto my-auto rounded-5">
           <div className="card-header">
             <ul className="nav justify-content-center nav-fill">
               <li className="nav-item navbar-items">
@@ -122,7 +126,7 @@ import { deleteTask } from "../Features/todoSlice";
             <div className="row">
               <div className="col">
                 <h3 className="card-title">Todays Task</h3>
-                <p className="lead">wednesday , 11 may</p>
+                <CurrentTimeComponent/>
               </div>
               <div className="col">
                 <button
@@ -135,35 +139,37 @@ import { deleteTask } from "../Features/todoSlice";
                 </button>
               </div>
             </div>
-            <div className="d-flex justify-content-center mt-3">
-              <ul className="list-group list-group-horizontal text-center">
-                <li className="list-group-item">
-                  <a href="#">
-                    All
-                    <span className="badge bg-primary rounded-pill pl-1">
-                      35
-                    </span>
-                  </a>
-                </li>
-                <li className="list-group-item">
-                  <a href="#">
-                    Opened
-                    <span className="badge bg-secondary rounded-pill">14</span>
-                  </a>
-                </li>
-                <li className="list-group-item">
-                  <a href="#">
-                    Closed
-                    <span className="badge bg-secondary rounded-pill">19</span>
-                  </a>
-                </li>
-                <li className="list-group-item">
-                  <a href="#">
-                    Archived
-                    <span className="badge bg-secondary rounded-pill">2</span>
-                  </a>
-                </li>
-              </ul>
+            <div className="d-flex justify-content-center mt-3 text-center">
+              <div className="col dash-nav">
+                <a href="#">
+                  all{" "}
+                  <span className="badge bg-primary rounded-pill ms-1">35</span>
+                </a>
+              </div>
+              <div className="col dash-nav">
+                <a href="#">
+                  Opened{" "}
+                  <span className="badge bg-secondary rounded-pill ms-1">
+                    14
+                  </span>
+                </a>
+              </div>
+              <div className="col dash-nav">
+                <a href="#">
+                  Closed{" "}
+                  <span className="badge bg-secondary rounded-pill ms-1">
+                    19
+                  </span>
+                </a>
+              </div>
+              <div className="col dash-nav">
+                <a href="#">
+                  Archived{" "}
+                  <span className="badge bg-secondary rounded-pill ms-1">
+                    2
+                  </span>
+                </a>
+              </div>
             </div>
             {isLoading ? (
               <Loader />

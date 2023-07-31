@@ -5,6 +5,7 @@ import TimeDisplay from "../helpers/TimeDisplay";
 import { useDispatch } from "react-redux";
 import { doneTask, getTasks,deleteTask } from "../Features/todoSlice";
 import { useSelector } from "react-redux";
+import { toast } from 'react-toastify';
 
 const TaskItem = (props) => {
   const [toggle, setToggle] = useState(props.done);
@@ -16,11 +17,31 @@ const TaskItem = (props) => {
     try{
       dispatch(doneTask(props))
       setToggle((prevToggle) => !prevToggle);
-      alert("Task done status edited successfully");
+      //alert("Task done status edited successfully");
+      toast.success("Task done status edited successfully", {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
       dispatch(getTasks())
     }catch (error){
       console.log(error);
-      alert(error)
+      //alert(error)
+      toast.error(error, {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
     }
 
     /*try {
@@ -36,11 +57,11 @@ const TaskItem = (props) => {
     props.onDeleteItem(props.id)
 
     //dispatch(deleteTask(tasksId));
-    //dispatch(getTasks())
+    dispatch(getTasks())
   }
   return (
     <>
-      <div className="card rounded-5 shadow-sm mt-4">
+      <div className="card rounded-5 shadow mt-4">
         <div className="card body rounded-4">
           <div className="text-right pe-3 pt-2">
             <button

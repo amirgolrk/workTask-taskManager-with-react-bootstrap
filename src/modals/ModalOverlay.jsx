@@ -51,13 +51,13 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
         setToggle(false);
       };*/
       
-      import axios from "axios";
+      //import axios from "axios";
       import { useState } from "react";
       import "bootstrap/dist/css/bootstrap.min.css";
       import { useDispatch } from "react-redux";
       import { AddTask } from "../Features/todoSlice";
       import { getTasks } from "../Features/todoSlice";
-
+      import { toast } from "react-toastify";
 
       
       const ModalOverlay = ({ onInput, onConfirm }) => {
@@ -94,7 +94,17 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
             onConfirm(); // Call onConfirm to close the modal
           } catch (error) {
             console.log(error?.response?.data);
-            alert(error.response.data);
+            //alert(error.response.data);
+            toast.error(error?.response?.data, {
+              position: "top-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              });
           }
         };
 

@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //import axios from "axios";
 import { useDispatch } from "react-redux";
 import {auth,handlingChange} from "../Features/loginSlice"
-import { getTasks } from "../Features/todoSlice";
+import { toast } from "react-toastify";
 const LoginForm = () => {
   const dispatch = useDispatch()
   const navigateTo = useNavigate()
@@ -27,7 +27,16 @@ const LoginForm = () => {
     const submitHandler = (e) => {
         e.preventDefault()
          //dispatch(getTasks())
-         dispatch(auth({onSuccess :() => {navigateTo("/todo")},onFail: () => {alert('you are not logged in')}}))
+         dispatch(auth({onSuccess :() => {navigateTo("/todo")},onFail: () => {toast.error('you are not logged in', {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });}}))
         /*axios.post("http://localhost:4000/login",{
             email:loginInfo.email,
             password:loginInfo.password
@@ -49,7 +58,7 @@ const LoginForm = () => {
 
   return (
     <form className="form mx-auto" onSubmit={submitHandler}>
-  <p className="form-title">Sign in to your account</p>
+  <p className="form-title">Log in to your account</p>
   <div className="input-container">
     <input type="email" name="email" placeholder="Enter email" onChange={changeHandler}/>
     <span></span>
@@ -58,7 +67,7 @@ const LoginForm = () => {
     <input type="password" name="password" placeholder="Enter password"onChange={changeHandler}/>
   </div>
   <button type="submit" className="submit">
-    Sign in
+    Log in
   </button>
   <p className="signup-link">
     No account?
