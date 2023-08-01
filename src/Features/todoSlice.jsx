@@ -115,6 +115,10 @@ export const todoSlice = createSlice({
   initialState: {
     loading: false,
     tasks: [],
+    openedTasks : [],
+    closedTasks : [],
+    openedCount: 0,
+    closedCount: 0,
   },
   reducers: {},
 
@@ -125,6 +129,10 @@ export const todoSlice = createSlice({
       })
       .addCase(getTasks?.fulfilled, (state, action) => {
         state.tasks = action.payload;
+        state.openedTasks = action.payload.filter((task) => !task.done)
+        state.closedTasks= action.payload.filter((task) => task.done)
+        state.openedCount = action.payload.filter((task) => !task.done).length;
+        state.closedCount = action.payload.filter((task) => task.done).length;
         console.log(action);
         state.loading = false;
       })
@@ -135,6 +143,10 @@ export const todoSlice = createSlice({
       })
       .addCase(deleteTask?.fulfilled, (state, action) => {
         state.loading = false;
+        state.openedTasks = action.payload.filter((task) => !task.done)
+        state.closedTasks= action.payload.filter((task) => task.done)
+        state.openedCount = state.tasks.filter((task) => !task.done).length;
+        state.closedCount = state.tasks.filter((task) => task.done).length;
         //state.tasks = action.payload;
         //alert("task deleted succeessfully");
         toast.success("task deleted succeessfully", {
@@ -173,6 +185,10 @@ export const todoSlice = createSlice({
         /*if(state.tasks.id === action.payload){
           state.tasks.done = !state.tasks.done
         }*/
+        state.openedTasks = action.payload.filter((task) => !task.done)
+        state.closedTasks= action.payload.filter((task) => task.done)
+        state.openedCount = state.tasks.filter((task) => !task.done).length;
+        state.closedCount = state.tasks.filter((task) => task.done).length;
         const taskId = action.payload.id;
         const taskToUpdate = state.tasks.find((task) => task.id === taskId);
         if (taskToUpdate) {

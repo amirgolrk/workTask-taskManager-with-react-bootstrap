@@ -72,12 +72,17 @@ function Card() {
   const tasksData = useSelector((state) => state.todo.tasks);
   console.log(tasksData);
   const isLoading = useSelector((state) => state.todo.loading);
+  const openedCount = useSelector((state) => state.todo.openedCount);
+  const closedCount = useSelector((state) => state.todo.closedCount);
+  const openedTasks = useSelector((state) => state.todo.openedTasks);
+  const closedTasks = useSelector((state) => state.todo.closedTasks);
+  const [taskType, setTaskType] = useState(0);
 
   const confirmHandler = () => {
     setFormIsOpen(null);
   };
 
-  const addData =async (task) => {
+  const addData = async (task) => {
     // We don't need this function since we're handling tasks through Redux.
     // If you have a form for adding tasks, you can dispatch the `AddTask` action instead.
     await dispatch(getTasks());
@@ -87,9 +92,9 @@ function Card() {
     dispatch(deleteTask(taskId));
     dispatch(getTasks());
   };*/
-  async function deleteHandler  (taskId) {
-    await dispatch(deleteTask(taskId))
-    await dispatch(getTasks())
+  async function deleteHandler(taskId) {
+    await dispatch(deleteTask(taskId));
+    await dispatch(getTasks());
   }
 
   useEffect(() => {
@@ -126,7 +131,7 @@ function Card() {
             <div className="row">
               <div className="col">
                 <h3 className="card-title">Todays Task</h3>
-                <CurrentTimeComponent/>
+                <CurrentTimeComponent />
               </div>
               <div className="col">
                 <button
@@ -141,24 +146,56 @@ function Card() {
             </div>
             <div className="d-flex justify-content-center mt-3 text-center">
               <div className="col dash-nav">
-                <a href="#">
+                <a
+                  href="#"
+                  className={`${taskType === 0 && "text-primary"}`}
+                  onClick={() => {
+                    setTaskType(0);
+                  }}
+                >
                   all{" "}
-                  <span className="badge bg-primary rounded-pill ms-1">35</span>
-                </a>
-              </div>
-              <div className="col dash-nav">
-                <a href="#">
-                  Opened{" "}
-                  <span className="badge bg-secondary rounded-pill ms-1">
-                    14
+                  <span
+                    className={`badge ${
+                      taskType === 0 ? "bg-primary" : "bg-secondary"
+                    } rounded-pill ms-1`}
+                  >
+                    {tasksData?.length}
                   </span>
                 </a>
               </div>
               <div className="col dash-nav">
-                <a href="#">
+                <a
+                  href="#"
+                  className={`${taskType === 1 && "text-primary"}`}
+                  onClick={() => {
+                    setTaskType(1);
+                  }}
+                >
+                  Opened{" "}
+                  <span
+                    className={`badge ${
+                      taskType === 1 ? "bg-primary" : "bg-secondary"
+                    } rounded-pill ms-1`}
+                  >
+                    {openedCount}
+                  </span>
+                </a>
+              </div>
+              <div className="col dash-nav">
+                <a
+                  href="#"
+                  className={`${taskType === 2 && "text-primary"}`}
+                  onClick={() => {
+                    setTaskType(2);
+                  }}
+                >
                   Closed{" "}
-                  <span className="badge bg-secondary rounded-pill ms-1">
-                    19
+                  <span
+                    className={`badge ${
+                      taskType === 2 ? "bg-primary" : "bg-secondary"
+                    } rounded-pill ms-1`}
+                  >
+                    {closedCount}
                   </span>
                 </a>
               </div>
@@ -173,8 +210,14 @@ function Card() {
             </div>
             {isLoading ? (
               <Loader />
-            ) : (
+            ) : taskType === 0 ? (
               <Tasks items={tasksData} onDeleteItem={deleteHandler} />
+            ) : taskType === 1 ? (
+              <Tasks items={openedTasks} onDeleteItem={deleteHandler} />
+            ) : taskType === 2 ? (
+              <Tasks items={closedTasks} onDeleteItem={deleteHandler} />
+            ) : (
+              <></>
             )}
           </div>
         </div>

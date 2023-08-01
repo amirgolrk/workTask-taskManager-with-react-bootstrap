@@ -129,6 +129,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
                 name="title"
                 onChange={(e) => setEnteredTitle(e.target.value)}
                 value={enteredTitle}
+                required
               />
             </div>
             <div className="form-group">
@@ -142,6 +143,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
                 rows={3}
                 onChange={(e) => setEnteredDescribe(e.target.value)}
                 value={enteredDescribe}
+                required
               />
             </div>
             <div className="form-group">
@@ -154,6 +156,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
                 name="date"
                 onChange={(e) => setEnteredDate(e.target.value)}
                 value={enteredDate}
+                required
               />
             </div>
             <label htmlFor={"checkbox"}> done ?</label>

@@ -1,9 +1,12 @@
 import { Outlet, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { RiLogoutCircleLine } from "react-icons/ri";
+import { HiHome } from "react-icons/hi";
+import {RiLoginCircleLine} from "react-icons/ri"
+import {FaUserPlus} from "react-icons/fa"
 import Tooltip from "@mui/material/Tooltip";
 import { Zoom } from "@mui/material";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 //import React from 'react';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -25,9 +28,10 @@ const Layout = () => {
       draggable: true,
       progress: undefined,
       theme: "colored",
-      })
-      setTimeout(()=>{navigateTo("/login");},3000)
-
+    });
+    setTimeout(() => {
+      navigateTo("/login");
+    }, 2500);
   };
 
   return (
@@ -51,23 +55,50 @@ const Layout = () => {
   </h3>*/}
             <div>
               <ul className="navbar-nav ms-auto">
+              <Tooltip TransitionComponent={Zoom} title="go to signUp page">
                 <li className="nav-item">
-                  <Link className="nav-link" aria-current="page" to="/harchi">
-                    Home
+                  <Link className="nav-link" aria-current="page" to="/">
+                  <HiHome
+                          style={{
+                            color: "blue",
+                            fontSize: "25px",
+                            cursor: "pointer",
+                            marginLeft: "5px",
+                          }}
+                        />
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/">
-                    Sign Up
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  {!userEmail && (
-                    <Link className="nav-link" to="/login">
-                      Log in
-                    </Link>
-                  )}
-                </li>
+                </Tooltip>
+                <Tooltip TransitionComponent={Zoom} title="Sign up to App">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/">
+                        <FaUserPlus
+                          style={{
+                            color: "mediumvioletred",
+                            fontSize: "25px",
+                            cursor: "pointer",
+                            marginLeft: "5px",
+                          }}
+                        />
+                      </Link>
+                    </li>
+                  </Tooltip>
+                {!userEmail && (
+                  <Tooltip TransitionComponent={Zoom} title="Log into App">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/login">
+                        <RiLoginCircleLine
+                          style={{
+                            color: "green",
+                            fontSize: "25px",
+                            cursor: "pointer",
+                            marginLeft: "5px",
+                          }}
+                        />
+                      </Link>
+                    </li>
+                  </Tooltip>
+                )}
                 {userEmail && (
                   <Tooltip
                     TransitionComponent={Zoom}
@@ -78,11 +109,11 @@ const Layout = () => {
                       onClick={logoutHandler}
                       style={{ cursor: "pointer" }}
                     >
-                      logout{" "}
+                      
                       <RiLogoutCircleLine
                         style={{
                           color: "red",
-                          fontSize: "20px",
+                          fontSize: "25px",
                           cursor: "pointer",
                           marginLeft: "5px",
                         }}
