@@ -4,7 +4,7 @@ import { BrowserRouter,Routes, Route } from "react-router-dom";
 import Card from "./pages/Card"
 import SignUpForm from "./pages/SignUpForm";
 import LoginForm from "./pages/LoginForm";
-import Layout from "./pages/Layout";
+import Layout from "./pages/layout";
 import ErrorPage from "./pages/ErrorPage";
 import RouteGuard from "./components/RouteGuard";
 import { ToastContainer } from 'react-toastify';
