@@ -6,11 +6,13 @@ import { useDispatch } from "react-redux";
 import { doneTask, getTasks,deleteTask } from "../Features/todoSlice";
 import { useSelector } from "react-redux";
 import { toast } from 'react-toastify';
+import { useNavigate } from "react-router";
 
 const TaskItem = (props) => {
   const [toggle, setToggle] = useState(props.done);
   const dispatch = useDispatch()
   const tasksId = useSelector((state) => state.todo.tasks.id);
+  const navigateTo = useNavigate()
   //const token = localStorage.getItem("token");
   //const headers = { Authorization: `Bearer ${token}`}
   const toggleHandler = async () => {
@@ -57,7 +59,7 @@ const TaskItem = (props) => {
     props.onDeleteItem(props.id)
 
     //dispatch(deleteTask(tasksId));
-    dispatch(getTasks())
+    dispatch(getTasks({onSuccess : () => {},onFail :() =>{navigateTo("/login")}}))
   }
   return (
     <>

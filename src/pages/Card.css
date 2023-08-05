@@ -64,6 +64,14 @@ html,body{
 }
 .tasklead{
   font-size:medium;
+  overflow: auto;
+}
+.clearfix{
+  overflow-wrap:normal;
+  overflow: auto;
+  text-overflow:clip;
+  word-wrap:normal;
+  word-break: break-all;
 }
 .taskdate{
   font-size:small;

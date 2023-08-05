@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTasks } from "../Features/todoSlice";
 import { deleteTask } from "../Features/todoSlice";
 import CurrentTimeComponent from "../helpers/CurrentTimeComponent";
+import { useNavigate } from "react-router";
 /*function Card() {
   //const dispatch = useDispatch()
   //const reduxTasks = useSelector((state) => state.todoslice.tasks)
@@ -77,6 +78,7 @@ function Card() {
   const openedTasks = useSelector((state) => state.todo.openedTasks);
   const closedTasks = useSelector((state) => state.todo.closedTasks);
   const [taskType, setTaskType] = useState(0);
+  const navigateTo = useNavigate()
 
   const confirmHandler = () => {
     setFormIsOpen(null);
@@ -85,7 +87,7 @@ function Card() {
   const addData = async (task) => {
     // We don't need this function since we're handling tasks through Redux.
     // If you have a form for adding tasks, you can dispatch the `AddTask` action instead.
-    await dispatch(getTasks());
+    await dispatch(getTasks({onSuccess : () => {},onFail :() =>{navigateTo("/login")}}))
   };
 
   /*const deleteHandler = (taskId) => {
@@ -93,18 +95,26 @@ function Card() {
     dispatch(getTasks());
   };*/
   async function deleteHandler(taskId) {
+
+    
     await dispatch(deleteTask(taskId));
-    await dispatch(getTasks());
+    await dispatch(getTasks({onSuccess : () => {},onFail :() =>{navigateTo("/login")}}))
   }
 
   useEffect(() => {
     // Dispatch getTasks action to load tasks from the API
-    dispatch(getTasks());
-  }, [dispatch]);
+    dispatch(getTasks({onSuccess : () => {},onFail :() =>{navigateTo("/login")}}))
+  }, [dispatch,navigateTo]);
 
   return (
     <>
-      {formIsOpen && <FormModal onConfirm={confirmHandler} onInput={addData} />}
+      {/*formIsOpen && <FormModal onConfirm={confirmHandler} onInput={addData} />*/}
+      <FormModal
+        formIsOpen={formIsOpen}
+        setFormIsOpen={setFormIsOpen}
+        onConfirm={confirmHandler}
+        onInput={addData}
+      />
 
       <div className="container-fluid custom-width-45">
         <div className="card mx-auto my-auto rounded-5">

@@ -6,15 +6,25 @@ import "./FormModal.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
-const FormModal = ({ onConfirm, onInput }) => {
+const FormModal = ({ formIsOpen, setFormIsOpen, onConfirm, onInput }) => {
+  if (!formIsOpen) {
+    return null; // If formIsOpen is false, do not render the modal
+  }
+
   return (
     <>
       {ReactDOM.createPortal(
-        <Backdrop onConfirm={onConfirm} />,
+        <Backdrop onConfirm={() => setFormIsOpen(false)} />,
         document.getElementById("backdrop-root")
       )}
       {ReactDOM.createPortal(
-        <ModalOverlay onConfirm={onConfirm} onInput={onInput} />,
+        <ModalOverlay
+          onConfirm={() => {
+            setFormIsOpen(false);
+            onConfirm();
+          }}
+          onInput={onInput}
+        />,
         document.getElementById("overlay-root")
       )}
     </>

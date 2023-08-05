@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 /*const token = localStorage.getItem("token");
 const headers = { Authorization: `Bearer ${token}` };*/
 
-export const getTasks = createAsyncThunk("todo/getTodos", async () => {
+export const getTasks = createAsyncThunk("todo/getTodos", async (action) => {
   try{
     const token = localStorage.getItem("token");
     const headers = { Authorization: `Bearer ${token}` };
@@ -23,8 +23,10 @@ export const getTasks = createAsyncThunk("todo/getTodos", async () => {
       theme: "colored",
       });
     localStorage.clear()
+    if(error?.response?.data === "jwt expired"){
+      action?.onFail()
+    }
   }
-
 });
 
 export const deleteTask = createAsyncThunk(
@@ -92,7 +94,7 @@ export const AddTask = createAsyncThunk("task/addTask", async (task) => {
        headers,
      }
    );
-
+    
     }catch(error){
       console.log(error?.response);
       //alert(error?.response)
@@ -106,6 +108,10 @@ export const AddTask = createAsyncThunk("task/addTask", async (task) => {
         progress: undefined,
         theme: "colored",
         });
+        if(error?.response?.data === "jwt expired"){
+
+          task.onFail()
+        }
     }
   //return response.data;
 });

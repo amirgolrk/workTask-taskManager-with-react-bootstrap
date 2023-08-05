@@ -58,7 +58,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
       import { AddTask } from "../Features/todoSlice";
       import { getTasks } from "../Features/todoSlice";
       import { toast } from "react-toastify";
-
+      import { useNavigate } from "react-router";
       
       const ModalOverlay = ({ onInput, onConfirm }) => {
         const [enteredTitle, setEnteredTitle] = useState("");
@@ -66,7 +66,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
         const [enteredDate, setEnteredDate] = useState("");
         const [toggle, setToggle] = useState(false);
         const dispatch = useDispatch(); // Get the dispatch function
-      
+        const navigateTo =useNavigate()
         const submitHandler = async (e) => {
           e.preventDefault();
           const ownerAndId = localStorage.getItem("id");
@@ -84,8 +84,8 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
       
           try {
             // Dispatch the AddTask action with the new task data
-            await dispatch(AddTask(newTaskData));
-            await dispatch(getTasks())
+            await dispatch(AddTask({newTaskData,onFail : () =>{navigateTo("/login")}}));
+            await dispatch(getTasks({onSuccess : () => {},onFail :() =>{navigateTo("/login")}}))
             console.log(newTaskData);
             setEnteredTitle("");
             setEnteredDescribe("");

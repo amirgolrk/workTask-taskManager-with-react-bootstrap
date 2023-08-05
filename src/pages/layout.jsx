@@ -2,36 +2,43 @@ import { Outlet, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { HiHome } from "react-icons/hi";
-import {RiLoginCircleLine} from "react-icons/ri"
-import {FaUserPlus} from "react-icons/fa"
+import { RiLoginCircleLine } from "react-icons/ri";
+import { FaUserPlus } from "react-icons/fa";
 import Tooltip from "@mui/material/Tooltip";
 import { Zoom } from "@mui/material";
 import { toast } from "react-toastify";
 //import React from 'react';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logOut } from "../Features/loginSlice";
+import { useDispatch } from "react-redux";
 const Layout = () => {
+  const dispatchTo = useDispatch();
   const navigateTo = useNavigate();
   const userEmailRedux = useSelector((state) => state.login.email);
   console.log(userEmailRedux);
   const userEmail = localStorage.getItem("email");
 
   const logoutHandler = () => {
-    localStorage.clear();
-    //alert("kicking you out !!! bye bye .");
-    toast.warn("kicking you out !!! bye bye .", {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-    setTimeout(() => {
-      navigateTo("/login");
-    }, 2500);
+    dispatchTo(
+      logOut({
+        onSuccess: () => {
+          navigateTo("/login");
+        },
+        onFail: () => {
+          toast.error("some error ocurred", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        },
+      })
+    );
   };
 
   return (
@@ -55,34 +62,34 @@ const Layout = () => {
   </h3>*/}
             <div>
               <ul className="navbar-nav ms-auto">
-              <Tooltip TransitionComponent={Zoom} title="go to signUp page">
-                <li className="nav-item">
-                  <Link className="nav-link" aria-current="page" to="/">
-                  <HiHome
-                          style={{
-                            color: "blue",
-                            fontSize: "25px",
-                            cursor: "pointer",
-                            marginLeft: "5px",
-                          }}
-                        />
-                  </Link>
-                </li>
+                <Tooltip TransitionComponent={Zoom} title="go to signUp page">
+                  <li className="nav-item">
+                    <Link className="nav-link" aria-current="page" to="/">
+                      <HiHome
+                        style={{
+                          color: "blue",
+                          fontSize: "25px",
+                          cursor: "pointer",
+                          marginLeft: "5px",
+                        }}
+                      />
+                    </Link>
+                  </li>
                 </Tooltip>
                 <Tooltip TransitionComponent={Zoom} title="Sign up to App">
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/">
-                        <FaUserPlus
-                          style={{
-                            color: "mediumvioletred",
-                            fontSize: "25px",
-                            cursor: "pointer",
-                            marginLeft: "5px",
-                          }}
-                        />
-                      </Link>
-                    </li>
-                  </Tooltip>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/">
+                      <FaUserPlus
+                        style={{
+                          color: "mediumvioletred",
+                          fontSize: "25px",
+                          cursor: "pointer",
+                          marginLeft: "5px",
+                        }}
+                      />
+                    </Link>
+                  </li>
+                </Tooltip>
                 {!userEmail && (
                   <Tooltip TransitionComponent={Zoom} title="Log into App">
                     <li className="nav-item">
@@ -109,7 +116,6 @@ const Layout = () => {
                       onClick={logoutHandler}
                       style={{ cursor: "pointer" }}
                     >
-                      
                       <RiLogoutCircleLine
                         style={{
                           color: "red",

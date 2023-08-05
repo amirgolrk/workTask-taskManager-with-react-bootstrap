@@ -34,9 +34,30 @@ const loginSlice = createSlice({
                 action.payload.onFail()
             })
         },
+        logOut : (state,action) =>{
+            try{
+             localStorage.clear();
+            toast.warn("kicking you out !!! bye bye .", {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+            setTimeout(() => {
+                action.payload.onSuccess()
+              }, 2500);   
+            }catch(error) {
+                action.payload.onFail()
+            }
+            
+        }
     }
 })
 
-export const {auth , handlingChange} = loginSlice.actions
+export const {auth , handlingChange,logOut} = loginSlice.actions
 
 export default loginSlice.reducer
