@@ -6,9 +6,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch } from "react-redux";
 import {auth,handlingChange} from "../Features/loginSlice"
 import { toast } from "react-toastify";
+import { useState } from "react";
 const LoginForm = () => {
   const dispatch = useDispatch()
   const navigateTo = useNavigate()
+  const [showPassword, setShowPassword] = useState(false);
     /*const pageNavigate = useNavigate()
     const [loginInfo,setLoginInfo] = useState({
         email : "",
@@ -23,20 +25,16 @@ const LoginForm = () => {
             [e.target.name] : e.target.value
     })*/
     }
+   
+    const togglePasswordVisibility = () => {
+      setShowPassword((prevState) => !prevState);
+    };
+
 
     const submitHandler = (e) => {
         e.preventDefault()
          //dispatch(getTasks())
-         dispatch(auth({onSuccess :() => {navigateTo("/todo")},onFail: () => {toast.error('you are not logged in', {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          });}}))
+         dispatch(auth({onSuccess :() => {navigateTo("/")},onFail: () => {}}))
         /*axios.post("http://localhost:4000/login",{
             email:loginInfo.email,
             password:loginInfo.password
@@ -64,14 +62,21 @@ const LoginForm = () => {
     <span></span>
   </div>
   <div className="input-container">
-    <input type="password" name="password" placeholder="Enter password"onChange={changeHandler}/>
+    <input type={showPassword ? "text" : "password"} name="password" placeholder="Enter password"onChange={changeHandler}/>
   </div>
   <button type="submit" className="submit">
     Log in
   </button>
+  <button
+          type="button"
+          className="password-toggle-button bg-info"
+          onClick={togglePasswordVisibility}
+        >
+          {showPassword ? "Hide Password" : "Show Password"}
+        </button>
   <p className="signup-link">
     No account?
-    <Link to={'/'}>Sign Up</Link>
+    <Link to={'/signUp'}>Sign Up</Link>
   </p>
 </form>
   );

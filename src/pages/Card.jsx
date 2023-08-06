@@ -119,7 +119,7 @@ function Card() {
       <div className="container-fluid custom-width-45">
         <div className="card mx-auto my-auto rounded-5">
           <div className="card-header">
-            <ul className="nav justify-content-center nav-fill">
+            {/*<ul className="nav justify-content-center nav-fill">
               <li className="nav-item navbar-items">
                 <a className="nav-link" href="#">
                   messages
@@ -135,7 +135,12 @@ function Card() {
                   last activity
                 </a>
               </li>
-            </ul>
+  </ul>*/}
+          <div className="d-flex justify-content-between row py-2 text-center">
+              <div className="col navbar-items"><a href="#">messages</a></div>
+              <div className="col navbar-items active"><a href="#">toaday tasks</a></div>
+              <div className="col navbar-items"><a href="#">last activity</a></div>
+          </div>
           </div>
           <div className="card-body rounded-5">
             <div className="row">

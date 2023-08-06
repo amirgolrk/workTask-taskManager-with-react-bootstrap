@@ -12,7 +12,7 @@ export const getTasks = createAsyncThunk("todo/getTodos", async (action) => {
     return response.data;
   }catch(error){
     //alert(`${error?.response?.data} please log in again`)
-    toast.error(`${error?.response?.data} please log in again`, {
+    toast.error(`${error?.message}`, {
       position: "top-left",
       autoClose: 3000,
       hideProgressBar: false,
@@ -22,7 +22,7 @@ export const getTasks = createAsyncThunk("todo/getTodos", async (action) => {
       progress: undefined,
       theme: "colored",
       });
-    localStorage.clear()
+    //localStorage.clear()
     if(error?.response?.data === "jwt expired"){
       action?.onFail()
     }
@@ -142,7 +142,7 @@ export const todoSlice = createSlice({
         console.log(action);
         state.loading = false;
       })
-      .addCase(getTasks?.rejected, (state, action) => {
+      .addCase(getTasks.rejected, (state, action) => {
         state.loading = false;
         alert(action?.error.name);
         console.log(action?.error.name);

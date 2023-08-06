@@ -10,9 +10,9 @@
 .modalStyle {
   background-color: white;
   position: fixed;
-  top: 25%;
+  top: 20%;
   left: 30%;
-  height : 50%;
+  height : 60%;
   width: 40%;
   z-index: 100;
   overflow: hidden;

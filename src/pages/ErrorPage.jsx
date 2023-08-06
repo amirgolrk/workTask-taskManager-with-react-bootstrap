@@ -11,7 +11,7 @@ function ErrorPage() {
         </div>
         <h2>We are sorry, Page not found!</h2>
         <p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
-        <Link to={'todo'}><a>Back To Homepage</a></Link>
+        <Link to={""}><a>Back To Homepage</a></Link>
       </div>
     </div>
   );

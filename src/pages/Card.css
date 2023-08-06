@@ -19,7 +19,7 @@ html,body{
   font-weight : bold;
 }
 .navbar-items{
-  font-size: large;
+  font-size:larger;
 }
 .card{
   border: none;
@@ -81,7 +81,7 @@ html,body{
     width: 100%; 
   }
 }
-@media (min-width: 450px) and (max-width: 650px) {
+@media (min-width: 450px) and (max-width: 915px) {
   .custom-width-45 {
     width: 80%; 
   }

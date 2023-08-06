@@ -4,8 +4,6 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 import { HiHome } from "react-icons/hi";
 import { RiLoginCircleLine } from "react-icons/ri";
 import { FaUserPlus } from "react-icons/fa";
-import Tooltip from "@mui/material/Tooltip";
-import { Zoom } from "@mui/material";
 import { toast } from "react-toastify";
 //import React from 'react';
 import { useSelector } from "react-redux";
@@ -23,7 +21,7 @@ const Layout = () => {
     dispatchTo(
       logOut({
         onSuccess: () => {
-          navigateTo("/login");
+          navigateTo("login");
         },
         onFail: () => {
           toast.error("some error ocurred", {
@@ -43,7 +41,7 @@ const Layout = () => {
 
   return (
     <>
-      <div className="mb-4">
+      <div className="mb-4 container-fluid">
         {/* Navigation */}
         <nav
           className="navbar navbar-expand-lg static-top rounded-bottom-4"
@@ -62,9 +60,8 @@ const Layout = () => {
   </h3>*/}
             <div>
               <ul className="navbar-nav ms-auto">
-                <Tooltip TransitionComponent={Zoom} title="go to signUp page">
                   <li className="nav-item">
-                    <Link className="nav-link" aria-current="page" to="/">
+                    <Link title="go to signUp page" className="nav-link" aria-current="page" to="signUp">
                       <HiHome
                         style={{
                           color: "blue",
@@ -75,10 +72,8 @@ const Layout = () => {
                       />
                     </Link>
                   </li>
-                </Tooltip>
-                <Tooltip TransitionComponent={Zoom} title="Sign up to App">
                   <li className="nav-item">
-                    <Link className="nav-link" to="/">
+                    <Link title="Sign up to App" className="nav-link" to="signUp">
                       <FaUserPlus
                         style={{
                           color: "mediumvioletred",
@@ -89,11 +84,9 @@ const Layout = () => {
                       />
                     </Link>
                   </li>
-                </Tooltip>
                 {!userEmail && (
-                  <Tooltip TransitionComponent={Zoom} title="Log into App">
                     <li className="nav-item">
-                      <Link className="nav-link" to="/login">
+                      <Link title="Log into App" className="nav-link" to="login">
                         <RiLoginCircleLine
                           style={{
                             color: "green",
@@ -104,14 +97,10 @@ const Layout = () => {
                         />
                       </Link>
                     </li>
-                  </Tooltip>
                 )}
                 {userEmail && (
-                  <Tooltip
-                    TransitionComponent={Zoom}
-                    title="logOut from the app"
-                  >
                     <li
+                      title="logOut from the app"
                       className="nav-item nav-link  text-danger"
                       onClick={logoutHandler}
                       style={{ cursor: "pointer" }}
@@ -125,7 +114,6 @@ const Layout = () => {
                         }}
                       />
                     </li>
-                  </Tooltip>
                 )}
               </ul>
             </div>

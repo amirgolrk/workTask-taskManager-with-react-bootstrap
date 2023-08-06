@@ -94,7 +94,6 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
             onConfirm(); // Call onConfirm to close the modal
           } catch (error) {
             console.log(error?.response?.data);
-            //alert(error.response.data);
             toast.error(error?.response?.data, {
               position: "top-left",
               autoClose: 3000,
