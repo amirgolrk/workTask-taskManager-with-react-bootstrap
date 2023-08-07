@@ -11,19 +11,20 @@ const LoginForm = () => {
   const dispatch = useDispatch()
   const navigateTo = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
-    /*const pageNavigate = useNavigate()
+    //const pageNavigate = useNavigate()
     const [loginInfo,setLoginInfo] = useState({
         email : "",
         password : ""
-    })*/
+    })
     const changeHandler = (e) => {
-      const name = e.target.name
-      const value = e.target.value
-      dispatch(handlingChange({name , value}))
-        /*setLoginInfo({
+      //const name = e.target.name
+      //const value = e.target.value
+
+      //dispatch(handlingChange({name , value}))
+        setLoginInfo({
             ...loginInfo,
             [e.target.name] : e.target.value
-    })*/
+    })
     }
    
     const togglePasswordVisibility = () => {
@@ -34,7 +35,7 @@ const LoginForm = () => {
     const submitHandler = (e) => {
         e.preventDefault()
          //dispatch(getTasks())
-         dispatch(auth({onSuccess :() => {navigateTo("/")},onFail: () => {}}))
+         dispatch(auth({onSuccess :() => {navigateTo("/")},onFail: () => {},loginInfo}))
         /*axios.post("http://localhost:4000/login",{
             email:loginInfo.email,
             password:loginInfo.password
@@ -55,7 +56,7 @@ const LoginForm = () => {
 
 
   return (
-    <form className="form mx-auto" onSubmit={submitHandler}>
+    <form className="form mx-auto mt-4" onSubmit={submitHandler}>
   <p className="form-title">Log in to your account</p>
   <div className="input-container">
     <input type="email" name="email" placeholder="Enter email" onChange={changeHandler}/>

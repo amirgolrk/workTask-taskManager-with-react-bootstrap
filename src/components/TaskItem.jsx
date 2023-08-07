@@ -17,20 +17,10 @@ const TaskItem = (props) => {
   //const headers = { Authorization: `Bearer ${token}`}
   const toggleHandler = async () => {
     try{
-      dispatch(doneTask(props))
+       dispatch(doneTask(props))
       setToggle((prevToggle) => !prevToggle);
       //alert("Task done status edited successfully");
-      toast.success("Task done status edited successfully", {
-        position: "top-left",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        });
-      dispatch(getTasks())
+       dispatch(getTasks())
     }catch (error){
       console.log(error);
       //alert(error)

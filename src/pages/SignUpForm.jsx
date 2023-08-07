@@ -280,7 +280,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container mt-4">
       <div className="row">
         <div className="mx-auto col-10 col-md-8 col-lg-6">
           <div className="form-box">

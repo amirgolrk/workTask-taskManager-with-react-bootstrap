@@ -4,25 +4,22 @@ import { toast } from "react-toastify";
 const loginSlice = createSlice({
   name: "login",
   initialState: {
-    email: "",
-    password: "",
-  },
+},
   reducers: {
-    handlingChange: (state, action) => {
-      state[action.payload.name] = action.payload.value;
-      console.log(state);
-    },
+    
     auth: (state, action) => {
+      console.log(action);
       axios
         .post("http://localhost:4000/login", {
-          email: state.email,
-          password: state.password,
+          email: action.payload.loginInfo.email,
+          password: action.payload.loginInfo.password,
         })
         .then((response) => {
           localStorage.setItem("token", response.data.accessToken);
           localStorage.setItem("id", response.data.user.id);
           localStorage.setItem("email", response.data.user.email);
           action.payload.onSuccess();
+          console.log("object");
         })
         .catch((error) => {
           if (error.response) {
@@ -51,7 +48,7 @@ const loginSlice = createSlice({
 
           console.log(error);
           //action.payload.onFail()
-        });
+        })
     },
     logOut: (state, action) => {
       try {

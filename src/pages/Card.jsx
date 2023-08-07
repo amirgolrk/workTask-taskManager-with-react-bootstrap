@@ -115,8 +115,8 @@ function Card() {
         onConfirm={confirmHandler}
         onInput={addData}
       />
-
-      <div className="container-fluid custom-width-45">
+        
+      <div className="container-fluid custom-width-45 mt-3">
         <div className="card mx-auto my-auto rounded-5">
           <div className="card-header">
             {/*<ul className="nav justify-content-center nav-fill">
