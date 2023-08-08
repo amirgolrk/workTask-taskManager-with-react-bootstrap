@@ -11,15 +11,17 @@ import { useNavigate } from "react-router-dom";
 import { logOut } from "../Features/loginSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import LogOutModal from "../modals/LogOutModal";
 const Layout = () => {
   const dispatchTo = useDispatch();
   const navigateTo = useNavigate();
   const [logOutOpen, setLogOutOpen] = useState(false);
+  const [logOutModalOpen,setLogOutModalOpen] = useState(false)
   const userEmailRedux = useSelector((state) => state.login.email);
   console.log(userEmailRedux);
   const userEmail = localStorage.getItem("email");
 
-  const logoutHandler = () => {
+  /*const logoutHandler = () => {
     console.log("bjhvc");
     dispatchTo(
       logOut({
@@ -40,11 +42,13 @@ const Layout = () => {
         },
       })
     );
-    setLogOutOpen(false)
-  };
+    //setLogOutOpen(false)
+    setLogOutModalOpen(false)
+  };*/
 
   return (
     <>
+      <LogOutModal logOutModalOpen={logOutModalOpen} setLogOutModalOpen={setLogOutModalOpen} />
       <div className="container-fluid">
         {/* Navigation */}
         <nav
@@ -59,9 +63,6 @@ const Layout = () => {
             ) : (
               <h3>you are not logged in</h3>
             )}
-            {/*<h3 className="navbar-brand" href="#">
-              welcome
-  </h3>*/}
             <div>
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
@@ -112,7 +113,7 @@ const Layout = () => {
                     title="logOut from the app"
                     className="nav-item nav-link  text-danger"
                     onClick={() => {
-                      setLogOutOpen(true);
+                      setLogOutModalOpen(true)//setLogOutOpen(true);
                     }}
                     style={{ cursor: "pointer" }}
                   >
@@ -131,7 +132,7 @@ const Layout = () => {
           </div>
         </nav>
       </div>
-      {logOutOpen && (
+      {/*logOutOpen && (
         <div className=" mx-auto  bg-warning text-center w-75 mb-4 py-2 font-weight-bold fs-3 fw-bold rounded-bottom-5">
           <div className="clearfix">
             <span className="float-start ps-3">
@@ -158,7 +159,7 @@ const Layout = () => {
             </span>
           </div>
         </div>
-      )}
+              )*/}
 
       <Outlet />
     </>
