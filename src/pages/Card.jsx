@@ -12,60 +12,7 @@ import { getTasks } from "../Features/todoSlice";
 import { deleteTask } from "../Features/todoSlice";
 import CurrentTimeComponent from "../helpers/CurrentTimeComponent";
 import { useNavigate } from "react-router";
-/*function Card() {
-  //const dispatch = useDispatch()
-  //const reduxTasks = useSelector((state) => state.todoslice.tasks)
-  const [formIsOpen, setFormIsOpen] = useState();
-  const [tasksData, setTasksData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const token = localStorage.getItem("token");
-  const headers = { Authorization: `Bearer ${token}` };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      //dispatch(getTasks())
-      setIsLoading(true);
-      try {
-        const response = await axios.get("http://localhost:4000/todos", {
-          headers,
-        });
-        setTasksData(response.data);
-        //console.log(tasksData);
-      } catch (error) {
-        alert(error?.response?.data);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const confirmHandler = () => {
-    setFormIsOpen(null);
-  };
-
-  const addData = (task) => {
-    setTasksData([task, ...tasksData]);
-    console.log(tasksData);
-  };
-
-  const deleteHandler = async (taskId) => {
-    setIsLoading(true);
-    try {
-      await axios.delete(`http://localhost:4000/todos/${taskId}`, { headers });
-      await setTasksData((prevTasks) => {
-        const updatedTasks = prevTasks.filter((task) => task?.id !== taskId);
-        return updatedTasks;
-      });
-      alert("task deleted successfully");
-    } catch {
-      (error) => {
-        alert(error?.response?.data);
-      };
-    }
-    setIsLoading(false);
-  };
-  //console.log(tasksData);*/
 
 function Card() {
   const [formIsOpen, setFormIsOpen] = useState(false);
@@ -119,23 +66,6 @@ function Card() {
       <div className="container-fluid custom-width-45 mt-3">
         <div className="card mx-auto my-auto rounded-5">
           <div className="card-header">
-            {/*<ul className="nav justify-content-center nav-fill">
-              <li className="nav-item navbar-items">
-                <a className="nav-link" href="#">
-                  messages
-                </a>
-              </li>
-              <li className="nav-item navbar-items">
-                <a className="nav-link active" href="#">
-                  todays tasks
-                </a>
-              </li>
-              <li className="nav-item navbar-items">
-                <a className="nav-link" href="#">
-                  last activity
-                </a>
-              </li>
-  </ul>*/}
           <div className="d-flex justify-content-between row py-2 text-center">
               <div className="col navbar-items"><a href="#">messages</a></div>
               <div className="col navbar-items active"><a href="#">toaday tasks</a></div>

@@ -36,16 +36,6 @@ const LoginForm = () => {
         e.preventDefault()
          //dispatch(getTasks())
          dispatch(auth({onSuccess :() => {navigateTo("/")},onFail: () => {},loginInfo}))
-        /*axios.post("http://localhost:4000/login",{
-            email:loginInfo.email,
-            password:loginInfo.password
-        }).then(response => {
-            localStorage.setItem("token",response.data.accessToken)
-            localStorage.setItem("id",response.data.user.id)
-            localStorage.setItem("email",response.data.user.email)
-            ;pageNavigate("/todo")
-            console.log(response.data);
-        }).catch((e) => {alert(e.response.data)})*/
     }
 
 

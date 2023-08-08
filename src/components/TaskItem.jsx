@@ -36,13 +36,6 @@ const TaskItem = (props) => {
         });
     }
 
-    /*try {
-      await axios.patch(`http://localhost:4000/todos/${props.id}`, { done : !toggle }, { headers });
-      setToggle((prevToggle) => !prevToggle);
-      alert("Task done status edited successfully");
-    } catch (error) {
-      alert(error.response.data);
-    }*/
   };
   const deleteHandler = () => {
     props?.setLoading(true)

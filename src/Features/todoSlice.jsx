@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
-/*const token = localStorage.getItem("token");
-const headers = { Authorization: `Bearer ${token}` };*/
 
 export const getTasks = createAsyncThunk("todo/getTodos", async (action) => {
   try {
