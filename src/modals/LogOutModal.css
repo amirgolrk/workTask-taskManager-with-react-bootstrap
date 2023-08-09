@@ -8,7 +8,7 @@
   background: rgba(0, 0, 0, 0.75);
 }
 
-.modalStyle {
+.modalStyle2 {
   background-color: white;
   position: fixed;
   top: 40%;
@@ -21,7 +21,7 @@
 }
 
 @media (max-width: 630px) {
-  .modalStyle {
+  .modalStyle2 {
     top: 50%; /* Adjust vertical position for smaller screens */
     left: 10%; /* Adjust horizontal position for smaller screens */
     height: 40%; /* Adjust height for smaller screens */

@@ -2,7 +2,6 @@
 import ReactDOM from "react-dom";
 import Backdrop from "./Backdrop";
 import LogOutOverLay from "./LogOutOverlay";
-import { toast } from "react-toastify";
 import "./logOutModal.css"
 const LogOutModal = ({
   logOutModalOpen,

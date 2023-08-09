@@ -59,8 +59,17 @@ const SignUpForm = () => {
       });
       await navigate("/");
     } catch (error) {
-      console.log(error?.response?.data);
-      alert(error?.response?.data);
+      console.log(error?.message);
+      toast.error(error?.message, {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      })
     }
 
     setPassword1('');

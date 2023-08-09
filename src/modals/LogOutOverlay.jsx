@@ -33,7 +33,7 @@ const LogOutOverLay = ({ onConfirm }) => {
       };
 
   return (
-    <div className="rounded-5 modalStyle">
+    <div className="rounded-5 modalStyle2">
       <div className="container mx-auto">
         <div className="card mx-auto">
           <div className="card-header">

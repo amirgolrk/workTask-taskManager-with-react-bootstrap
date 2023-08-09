@@ -3,12 +3,12 @@ import ReactDOM from "react-dom";
 import Backdrop from "./Backdrop";
 import ModalOverlay from "./ModalOverlay";
 import "./FormModal.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 
 
 const FormModal = ({ formIsOpen, setFormIsOpen, onConfirm, onInput }) => {
   if (!formIsOpen) {
-    return null; // If formIsOpen is false, do not render the modal
+    return null; 
   }
 
   return (
