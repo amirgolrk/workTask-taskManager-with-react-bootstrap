@@ -35,6 +35,7 @@ function Card() {
     // We don't need this function since we're handling tasks through Redux.
     // If you have a form for adding tasks, you can dispatch the `AddTask` action instead.
     await dispatch(getTasks({onSuccess : () => {},onFail :() =>{navigateTo("/login")}}))
+    window.scrollTo(0,document.body.scrollHeight)
   };
 
   /*const deleteHandler = (taskId) => {
@@ -46,6 +47,10 @@ function Card() {
     
     await dispatch(deleteTask(taskId));
     await dispatch(getTasks({onSuccess : () => {},onFail :() =>{navigateTo("/login")}}))
+    console.log(taskId);
+    const deletingId = document.getElementById(taskId - 1)
+    window.scrollTo(0,deletingId.offsetTop - 20)
+    console.log(deletingId);
   }
 
   useEffect(() => {

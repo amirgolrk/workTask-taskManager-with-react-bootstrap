@@ -3,7 +3,7 @@ import "./SignUpForm.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import toaster from "../helpers/toaster";
 
 const SignUpForm = () => {
   const [password1, setPassword1] = useState('');
@@ -24,16 +24,7 @@ const SignUpForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     if (password1 !== password2) {
-      toast.error("Passwords don't match", {
-        position: "top-left",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toaster("Passwords don't match","error",3000)
       return;
     }
 
@@ -47,29 +38,11 @@ const SignUpForm = () => {
       const token = response.data.accessToken;
       console.log(token);
       localStorage.setItem('token', token);
-      toast.success("Registration successful", {
-        position: "top-left",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toaster("Registration successful","success",3000)
       await navigate("/");
     } catch (error) {
       console.log(error?.message);
-      toast.error(error?.message, {
-        position: "top-left",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      })
+      toaster(error?.message,"error",3000)
     }
 
     setPassword1('');

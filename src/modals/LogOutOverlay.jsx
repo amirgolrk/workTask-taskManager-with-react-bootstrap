@@ -3,8 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch } from "react-redux";
 import { logOut } from "../Features/loginSlice";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-
+import toaster from "../helpers/toaster";
 // eslint-disable-next-line react/prop-types
 const LogOutOverLay = ({ onConfirm }) => {
     const dispatchTo = useDispatch()
@@ -16,16 +15,7 @@ const LogOutOverLay = ({ onConfirm }) => {
               navigateTo("login");
             },
             onFail: () => {
-              toast.error("some error ocurred", {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-              });
+              toaster("some error ocurred","error",3000)
             },
           })
         );
@@ -39,7 +29,7 @@ const LogOutOverLay = ({ onConfirm }) => {
           <div className="card-header">
             <h3 className="card-title fs-3 fw-3 text-center">Are you Sure ?</h3>
           </div>
-          <div className="card-body d-flex justify-content-around mt-4">
+          <div className="card-body d-flex justify-content-around mt-2">
             <button type="button" onClick={logoutHandler} className="btn bg-danger fs-4 fw-bold">
               Log out
             </button>

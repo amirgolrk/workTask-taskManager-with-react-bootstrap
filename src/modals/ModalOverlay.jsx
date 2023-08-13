@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch } from "react-redux";
 import { AddTask } from "../Features/todoSlice";
 import { getTasks } from "../Features/todoSlice";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import toaster from "../helpers/toaster";
 
 const ModalOverlay = ({ onInput, onConfirm }) => {
   const [enteredTitle, setEnteredTitle] = useState("");
@@ -26,7 +26,7 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
       done: !toggle,
       date: new Date(enteredDate).getTime(),
     };
-
+    console.log(newTaskData.date);
     /*const token = localStorage.getItem("token");
           const headers = { Authorization: `Bearer ${token}` };*/
 
@@ -48,24 +48,17 @@ const ModalOverlay = ({ onInput, onConfirm }) => {
           },
         })
       );
+
       console.log(newTaskData);
       setEnteredTitle("");
       setEnteredDescribe("");
       setEnteredDate("");
       setToggle(false);
       onConfirm(); // Call onConfirm to close the modal
+      window.scrollTo(0,document.body.scrollHeight)
     } catch (error) {
       console.log(error?.response?.data);
-      toast.error(error?.response?.data, {
-        position: "top-left",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toaster(error?.response?.data,"error",3000)
     }
   };
 

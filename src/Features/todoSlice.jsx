@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
-
+import toaster from "../helpers/toaster";
 export const getTasks = createAsyncThunk("todo/getTodos", async (action) => {
   try {
     const token = localStorage.getItem("token");
@@ -12,16 +11,7 @@ export const getTasks = createAsyncThunk("todo/getTodos", async (action) => {
     return response.data;
   } catch (error) {
     //alert(`${error?.response?.data} please log in again`)
-    toast.error(`${error?.message}`, {
-      position: "top-left",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
+    toaster(`${error?.message}`,"error",3000)
     //localStorage.clear()
     if (error?.response?.data === "jwt expired") {
       action?.onFail();
@@ -54,29 +44,11 @@ export const doneTask = createAsyncThunk("task/doneTask", async (task) => {
         headers,
       }
     );
-    await toast.success("Task done status edited successfully", {
-      position: "top-left",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
+    await toaster("Task done status edited successfully","success",3000)
     return response.data;
   } catch (error) {
     //alert(error?.response?.data)
-    toast.error(error?.response?.data, {
-      position: "top-left",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
+    toaster(error?.response?.data,"error",3000)
     console.log(error?.response?.data);
   }
 });
@@ -106,16 +78,7 @@ export const AddTask = createAsyncThunk("task/addTask", async (payload) => {
   } catch (error) {
     console.log(error?.response);
     //alert(error?.response)
-    toast.error(error?.response?.data, {
-      position: "top-left",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
+    toaster(`${error?.message}`,"error",3000)
     if (error?.response?.data === "jwt expired") {
       payload.onFail();
       localStorage.clear()
@@ -162,31 +125,13 @@ export const todoSlice = createSlice({
         state.openedCount = state.openedTasks.length;
         state.closedCount = state.closedTasks.length;
         //state.tasks = action.payload;
-        toast.success("task deleted successfully", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        toaster("task deleted successfully","success",3000)
       })
       .addCase(deleteTask?.pending, (state, action) => {
         state.loading = true;
       })
       .addCase(deleteTask?.rejected, (state, action) => {
-        toast.error(action.error.message, {
-          position: "top-left",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        toaster(action.error.message,"error",3000)
         console.log(action);
       })
       .addCase(AddTask?.pending, (state, action) => {

@@ -5,12 +5,13 @@ import TimeDisplay from "../helpers/TimeDisplay";
 import { useDispatch } from "react-redux";
 import { doneTask, getTasks,deleteTask } from "../Features/todoSlice";
 import { useSelector } from "react-redux";
-import { toast } from 'react-toastify';
+import toaster from "../helpers/toaster";
 import { useNavigate } from "react-router";
 
 const TaskItem = (props) => {
   const [toggle, setToggle] = useState(props.done);
   const dispatch = useDispatch()
+  console.log(props);
   const tasksId = useSelector((state) => state.todo.tasks.id);
   const navigateTo = useNavigate()
   //const token = localStorage.getItem("token");
@@ -21,32 +22,26 @@ const TaskItem = (props) => {
       setToggle((prevToggle) => !prevToggle);
       //alert("Task done status edited successfully");
        dispatch(getTasks())
+       const doneId = document.getElementById(props.id)
+       window.scrollTo(0,doneId.offsetTop - 20)
+       console.log(doneId);
     }catch (error){
       console.log(error);
       //alert(error)
-      toast.error(error, {
-        position: "top-left",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        });
+      toaster(error,"error",3000)
     }
 
   };
   const deleteHandler = () => {
     props?.setLoading(true)
-    props.onDeleteItem(props.id)
+    props.onDeleteItem(props.id,)
 
     //dispatch(deleteTask(tasksId));
     dispatch(getTasks({onSuccess : () => {},onFail :() =>{navigateTo("/login")}}))
   }
   return (
     <>
-      <div className="card rounded-5 shadow mt-4">
+      <div id={props.id} className="card rounded-5 shadow mt-4">
         <div className="card body rounded-4">
           <div className="text-right pe-3 pt-2">
             <button
