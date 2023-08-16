@@ -56,6 +56,8 @@ function Card() {
   useEffect(() => {
     // Dispatch getTasks action to load tasks from the API
     dispatch(getTasks({onSuccess : () => {},onFail :() =>{navigateTo("/login")}}))
+    console.log(openedTasks);
+    console.log(closedTasks);
   }, [dispatch,navigateTo]);
 
   return (
@@ -163,9 +165,9 @@ function Card() {
             ) : taskType === 0 ? (
               <Tasks items={tasksData} onDeleteItem={deleteHandler} />
             ) : taskType === 1 ? (
-              <Tasks items={openedTasks} onDeleteItem={deleteHandler} />
+              <Tasks items={openedTasks} onDeleteItem={deleteHandler} done={false} />
             ) : taskType === 2 ? (
-              <Tasks items={closedTasks} onDeleteItem={deleteHandler} />
+              <Tasks items={closedTasks} onDeleteItem={deleteHandler} done={true}/>
             ) : (
               <></>
             )}

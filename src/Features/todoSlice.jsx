@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import toaster from "../helpers/toaster";
@@ -120,8 +121,8 @@ export const todoSlice = createSlice({
       })
       .addCase(deleteTask?.fulfilled, (state, action) => {
         state.loading = false;
-        state.openedTasks = action.payload.filter((task) => !task.done);
-        state.closedTasks = action.payload.filter((task) => task.done);
+        //state.openedTasks = action.payload.filter((task) => !task.done);
+        //state.closedTasks = action.payload.filter((task) => task.done);
         state.openedCount = state.openedTasks.length;
         state.closedCount = state.closedTasks.length;
         //state.tasks = action.payload;
@@ -153,8 +154,8 @@ export const todoSlice = createSlice({
           state.tasks.done = !state.tasks.done
         }*/
         state.openedTasks = action.payload.filter((task) => !task.done);
-        state.closedTasks = action.payload.filter((task) => task.done);
-        state.openedCount = state.openedTasks.length;
+        //state.closedTasks = action.payload.filter((task) => task.done);
+        //state.openedCount = state.openedTasks.length;
         state.closedCount = state.closedTasks.length;
         const taskId = action.payload.id;
         const taskToUpdate = state.tasks.find((task) => task.id === taskId);

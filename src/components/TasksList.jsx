@@ -3,7 +3,7 @@
 import { useEffect,useState } from "react";
 import TaskItem from "./TaskItem";
 
-const TasksList = ({ items, onDeleteItem }) => {
+const TasksList = ({ items, onDeleteItem ,done }) => {
   useEffect(()=>{
     setLoading(false)
   },[items])
